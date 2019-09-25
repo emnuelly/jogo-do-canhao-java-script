@@ -1,150 +1,270 @@
+class Game {
+    
+    constructor(engine, controls) {
+        this.gameEngine = engine
+        this.controls = controls
 
-//variaveis que recebem o botão, e variavel que recebe o setInterval
-var button = document.getElementById('shoot');
-var buttonRestart = document.getElementById('restart');
+        this.controls.buttonShoot.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.play();
+        });
 
-var timer = null;
+        this.controls.buttonRestart.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.resetGame();
+        });
+    }
 
+    addElement(gameElement) {
+        this.gameEngine.addElement(gameElement);
+    }
 
-//variaveis do Canvas
-var screen = document.querySelector("canvas");
-var brush = screen.getContext('2d');
+    start() {
+        this.gameEngine.start();
+        this.controls.buttonShoot.style.display = 'block';
+        this.controls.buttonRestart.style.display = "none";
+    }
 
-//objeto que segura todas as variáveis iniciais da bola
-let ball = {
-    positionX: 105,
-    positionY: 520,
-    speedX: 0,
-    speedY: 0,
-    gravity: .2,
-    radius: 11
-}
+    endGame() {
+        this.controls.buttonShoot.style.display = 'none';
+        this.controls.buttonRestart.style.display = "block";
+    }
 
-//idenitifica o final do jogo
-let endGame = false;
+    resetGame() {
+        this.controls.buttonShoot.style.display = 'block';
+        this.controls.buttonRestart.style.display = "none";
+        let ball = this.gameEngine.findElement("ball");
+        ball.reset();
+    }
 
-// variavel que recebe a imagem
-let canon = new Image();
-canon.src = "img/cannon.png";
-
-
-//inicia o jogo pegando o valor de dentro dos input
-function clickButton() {
-    let speed = document.getElementById('speed').value;
-    let angle = document.getElementById('angle').value;
-
-    if (angle < 0 || angle > 90) {
-        alert("Digite um ângulo inválido!");
-    }else if(speed < 0){
-        alert("Digite uma velocidade válida!");
-
-    } else {
-        //chama função que faz o calculo da velocidade e ângulo
-        calcSpeedAngle(speed, angle);
-        //start no jogo, iniciando o setInterval
-        timer = setInterval(updateScreen, 1000 / 60);
-        button.style.display = 'none';
+    play() {
+        // merece uma melhoria e receber como parametro
+        let speed = document.getElementById('speed').value;
+        let angle = document.getElementById('angle').value;
+    
+        if (angle < 0 || angle > 90) {
+            alert("Digite um ângulo inválido!");
+        }else if(speed < 0){
+            alert("Digite uma velocidade válida!");
+    
+        } else {
+            let ball = this.gameEngine.findElement("ball");
+            ball.apply(speed, angle);
+            this.controls.buttonShoot.style.display = 'none';
+        }
     }
 }
 
+class GameEngine{
+    constructor(screen){
+        this.screen = screen
+        this.brush = this.screen.getContext('2d')
+        this.gameElements = []
+        this.fps = 0;
+        this.timeLastFrame = (new Date()).getTime();
+    }
 
-//função que calcula as velocidades x e y a partir da velocidade do angulo
-function calcSpeedAngle(speed, angle) {
-    ball.speedX = Math.cos(angle * Math.PI / 180) * speed;
-    ball.speedY = - Math.sin(angle * Math.PI / 180) * speed;
-}
+    start() {
+       requestAnimationFrame(this.gameLoop.bind(this))
+    }
+    addElement(gameElement) {
+        this.gameElements.push(gameElement);
+    }
 
-//função que desenha a bola
-function drawBall(x, y, radius) {
-    brush.fillStyle = 'black';
-    brush.beginPath();
-    brush.arc(x, y, radius, 0, 2 * Math.PI);
-    brush.fill();
+    findElement(name) {
+        let result = null;
+        this.gameElements.forEach((el) => {
+            if(el.name == name) result = el;
+        })
+        return result;
+    }
 
-}
-
-//função que desenha o fundo do joguinho
-function drawBackground() {
-    //back ground render:
-    brush.fillStyle = '#ededed';
-    brush.fillRect(0, 0, 1000, 600);
-    brush.fillStyle = '#1aab00';
-    brush.fillRect(0, 550, 1000, 50);
-}
-
-//função que desenha o canhão
-function drawCanon() {
-    brush.drawImage(canon, 30, 520, 70, 70)
-}
-
-//função que reseta o objeto da bola
-function resetBall() {
-    ball = {
-        positionX: 105,
-        positionY: 520,
-        speedX: 0,
-        speedY: 0,
-        gravity: .2,
-        radius: 11
+    gameLoop() {
+       let timeFrame = (new Date()).getTime() - this.timeLastFrame;
+       this.fps = 1000 / timeFrame;
+       this.brush.beginPath();
+       this.brush.clearRect(0,0, this.screen.width, this.screen.height);
+       this.brush.fill();
+       this.gameElements.forEach((element) => {
+            element.update(this.fps);
+            element.draw(this.brush);
+       });
+       this.timeLastFrame = (new Date()).getTime();
+       this.brush.fillStyle = "#000000";
+       this.brush.font = '18px serif';
+       this.brush.fillText('Fps: '+this.fps.toFixed(0), 10, 20);
+       requestAnimationFrame(this.gameLoop.bind(this))
     }
 }
 
-//atualiza o objeto da bola para a posição e velocidade que o usuário digita
-function updateBall() {
-    ball.speedY = ball.speedY + ball.gravity
-    ball.positionX = ball.positionX + ball.speedX;
-    ball.positionY = ball.positionY + ball.speedY;
-}
+class Ball{
+    constructor(name){
+        this.name = name;
+        this.positionX = 105
+        this.positionY = 520
+        this.speedX = 0
+        this.speedY = 0
+        this.gravity = 800
+        this.radius = 11
+        this.enabled = false
+        this.onCollide = null;
+    }
 
-//checa se a bola chegou no gramado
-function checkColision() {
-    if (ball.positionY >= (screen.height - 20))  {
-        endGame = true;
+    addCollideListener(listener) {
+        this.onCollide = listener;
+    }
+
+    update(fps) {
+        this.positionX += this.speedX / fps;
+        if(this.enabled) {
+            this.speedY = this.speedY + this.gravity / fps
+            this.positionY = this.positionY + this.speedY / fps;
+        }
+        if (this.positionY >= 580- 20)  {
+            this.speedX = 0;
+            this.speedY = 0;
+            this.enabled = false
+            this.onCollide.call();
+        }
+    }
+
+    draw(brush) {
+        brush.fillStyle = 'black';
+        brush.beginPath();
+        brush.arc(this.positionX, this.positionY, this.radius, 0, 2 * Math.PI);
+        brush.fill();
+    }
+
+    reset() {
+       
+        this.positionX= 105;
+        this.positionY= 520;
+        this.speedX= 0;
+        this.speedY= 0;
+           
+    }
+
+    apply(speed, angle) {
+        this.enabled = true
+        this.speedX = Math.cos(angle * Math.PI / 180) * speed;
+        this.speedY = - Math.sin(angle * Math.PI / 180) * speed;
     }
 }
-//Função que inicializa o jogo
-function startGame(){
-    drawBackground();
-    resetBall()
-    drawBall(ball.positionX, ball.positionY, 11);
-    drawCanon();
-    canon.onload = () => {
-        brush.drawImage(canon, 30, 520, 70, 70);
+
+class Cannon{
+    constructor(name, position){
+        this.name = name;
+        this.image = null
+        this.posX = position.x
+        this.posY = position.y
+        this.width = 70
+        this.height = 70
+        this.image = new Image();
+        this.image.src = "img/cannon.png";
     }
-    button.style.display = 'block';
-    buttonRestart.style.display = "none";
-}
-//Função que reinicia o jogo.
-function restartGame() {
-    startGame();
-    endGame = false;
-    clearInterval(timer);
+    update() {
+
+    }
+    draw(brush) {
+        brush.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+    }
+
 }
 
-// Inicializaçao do jogo
-if (!endGame){
-    startGame()
+class Floor {
+    constructor(name){
+        this.name = name;
+        this.posX = 0
+        this.posY = 550
+        this.width =  1000
+        this.height = 50
+    }
+    update() {
+
+    }
+    draw(brush) {
+        brush.beginPath();
+        brush.fillStyle = '#1aab00';
+        brush.fillRect(this.posX, this.posY, this.width, this.height);
+        brush.fill();
+    }
     
 }
 
+class Background{
+    constructor(name){
+        this.name = name;
+        this.posX = 0 
+        this.posY = 0
+        this.width = 1000
+        this.height = 600
+        this.clouds = [];
 
-// Função que faz o jogo funcionar
-function updateScreen() {
-    checkColision();
-    if (!endGame) {
-        drawBackground();
-        drawBall(ball.positionX, ball.positionY, 11);
-        updateBall();
-        drawCanon()
+        this.clouds.push({
+            x: 2000,
+            y: 35,
+            width:280,
+            height:60,
+            speed: 1,
+        })
 
-    }else{
-        button.style.display = 'none';
-        buttonRestart.style.display = "block";    
+        this.clouds.push({
+            x: 2400,
+            y: 60,
+            width:180,
+            height:30,
+            speed:2
+        })
+
     }
-
+    update() {
+        this.clouds.forEach((el) => {
+            el.x -= el.speed;
+            if(el.x < - el.width * 2) {
+                el.x = 2000;
+            } 
+        })
+    }
+    draw(brush) {
+        brush.beginPath()
+        brush.fillStyle = '#ededed'
+        brush.fillRect(this.posX, this.posY, this.width, this.height)
+        brush.fillStyle = '#ff0000';
+        this.clouds.forEach((el) => {
+            brush.fillRect(el.x, el.y, el.width, el.height);
+        });
+        brush.fill();
+        brush.fill()
+    }
 }
 
+// aqui é onde o jogo roda mesmo
+
+let myControls = {
+    buttonShoot: document.getElementById('shoot'),
+    buttonRestart: document.getElementById('restart')
+};
+
+let screen = document.querySelector("canvas")
+
+let myEngine = new GameEngine(screen)
+
+// adiciona todos os elementos
+let myCannon = new Cannon("cannon",{x: 30, y: 520});
+let ball2 = new Ball("ball");
+let myFloor = new Floor("floor");
+let myBackground = new Background("background");
+
+let cannonGame = new Game(myEngine, myControls)
 
 
+ball2.addCollideListener(() => {
+    cannonGame.endGame();
+});
 
+cannonGame.addElement(myBackground);
+cannonGame.addElement(myFloor);
+cannonGame.addElement(ball2);
+cannonGame.addElement(myCannon);
 
+cannonGame.start();
