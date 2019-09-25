@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jogo do Canhão</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+    <body>
+        <div class="container">
+            <canvas width="1000" height="600"></canvas>
+        </div>
+        <div class="container inputs">
+            <input class="input-container" type="number" id="angle" placeholder="Angulo">
+            <input class="input-container"  type="number" id="speed" placeholder="Velocidade">
+            <button class="button-shoot" onclick="clickButton()" id="shoot">Atirar</button>
+            <button class="button-shoot" onclick="restartGame()" id="restart">Tentar de novo!</button>
+
+        </div>
+        <script src="game.js"></script>
+    </body>
+</html>
