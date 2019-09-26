@@ -1,6 +1,6 @@
 let resolution = {
     width: window.innerWidth,
-    height: window.innerHeight - 100 //mudar futuramente
+    height: window.innerHeight - 5
 }
 
 let myControls = {
@@ -17,6 +17,7 @@ hammer.add(new Hammer.Pan({
     direction: Hammer.DIRECTION_ALL,
     threshold: 0
 }));
+
 
 let myEngine = new GameEngine(screen)
 
@@ -38,6 +39,16 @@ let myCannon2 = new Cannon("cannon2", {
     y: resolution.height - 95
 }, true, Ball, cannonGame);
 
+// teste hammer
+
+hammer.on("pan", ev => {
+
+    if (ev.isFinal) {
+        console.log(ev.angle, ev.distance)
+        cannonGame.play(ev.distance, ev.angle)
+
+    }
+})
 
 
 cannonGame.addElement(myBackground);
