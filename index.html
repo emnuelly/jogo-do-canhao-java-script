@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,26 @@
     <title>Jogo do Canhão</title>
     <link rel="stylesheet" href="style.css">
 </head>
-    <body>
-        <div class="container">
-            <canvas width="1000" height="600"></canvas>
-        </div>
-        <div class="container inputs">
-            <input class="input-container" type="number" id="angle" placeholder="Angulo">
-            <input class="input-container"  type="number" id="speed" placeholder="Velocidade">
-            <button class="button-shoot" id="shoot">Atirar</button>
-            <button class="button-shoot" id="restart">Tentar de novo!</button>
 
-        </div>
-        <script src="game.js"></script>
-    </body>
+<body>
+    <div class="container">
+        <canvas></canvas>
+    </div>
+    <div class="container inputs">
+        <input class="input-container" type="number" id="angle" placeholder="Angulo">
+        <input class="input-container" type="number" id="speed" placeholder="Velocidade">
+        <button class="button-shoot" id="shoot">Atirar</button>
+        <!-- <button class="button-shoot" id="restart">Tentar de novo!</button> -->
+
+    </div>
+    <script src="Game.js"></script>
+    <script src="GameEngine.js"></script>
+    <script src="Cannon.js"></script>
+    <script src="Floor.js"></script>
+    <script src="Ball.js"></script>
+    <script src="Background.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
 </html>

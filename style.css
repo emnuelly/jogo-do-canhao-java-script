@@ -1,13 +1,17 @@
-.container{
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
+html,
+body {
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0 auto;
 }
 
-.inputs{
+
+.inputs {
     margin-top: 20px;
+    height: 70px;
 }
-.input-container{
+
+.input-container {
     width: 200px;
     height: 30px;
     margin-left: 10px;
@@ -19,9 +23,9 @@
 input:focus {
     border: 1px solid #d1d0d0;
     outline: 0;
-} 
+}
 
-.button-shoot{
+.button-shoot {
     background-color: #1aab00;
     border: none;
     margin-left: 10px;
@@ -30,7 +34,7 @@ input:focus {
     color: aliceblue;
 }
 
-.button-shoot:hover{
+.button-shoot:hover {
     cursor: pointer;
     background-color: black;
 }
