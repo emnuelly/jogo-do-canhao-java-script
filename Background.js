@@ -11,33 +11,33 @@ class Background {
         this.clouds.push({
             image: "img/cloud.png",
             x: 800,
-            y: 35,
-            width: 150,
-            height: 80,
+            y: Math.random() * screen.height/ 2,
+            width: 230,
+            height: 150,
             speed: 2
         })
         this.clouds.push({
             image: "img/clouds.png",
             x: 1000,
-            y: 70,
-            width: 150,
-            height: 80,
+            y: Math.random() * screen.height/ 2,
+            width: 200,
+            height: 150,
             speed: 1
         })
         this.clouds.push({
             image: "img/cloud.png",
             x: 1200,
-            y: 90,
-            width: 150,
+            y: Math.random() * screen.height/ 2,
+            width: 100,
             height: 80,
             speed: 1.5
         })
         this.clouds.push({
             image: "img/clouds.png",
             x: 1200,
-            y: 110,
+            y: Math.random() * screen.height/ 2,
             width: 150,
-            height: 80,
+            height: 150,
             speed: 0.5
         })
 

@@ -1,5 +1,5 @@
 class Cannon {
-    constructor(name, position, flip, ball, resolution) {
+    constructor(name, position, flip, ball, resolution, isPlayerOne) {
         this.name = name;
         this.image = null
         this.posX = position.x
@@ -9,6 +9,7 @@ class Cannon {
         this.image = new Image();
         this.flip = false;
         this.ball = null;
+        this.isPlayerOne = isPlayerOne
         if (flip) {
             this.shootingPositionX = this.posX - 20;
         } else {
@@ -22,6 +23,10 @@ class Cannon {
         } else {
             this.image.src = "img/cannon.png";
         }
+        this.flagImage1 = new Image();
+        this.flagImage1.src = "img/flag.png";
+        this.flagImage2 = new Image();
+        this.flagImage2.src = "img/flag.png";
     }
 
     update() {
@@ -39,6 +44,11 @@ class Cannon {
     }
 
     draw(brush) {
+        console.log(cannonGame.playerOne)
+        if (cannonGame.playerOne == this.isPlayerOne) {
+            brush.drawImage(this.flagImage1,
+                this.isPlayerOne ? this.posX - 10 : this.posX + 45, this.posY, 50, 50)
+        }
         brush.drawImage(this.image, this.posX, this.posY, this.width, this.height)
     }
 

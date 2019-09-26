@@ -36,7 +36,7 @@ class GameEngine {
         this.timeLastFrame = (new Date()).getTime();
         this.brush.fillStyle = "#000000";
         this.brush.font = '18px serif';
-        this.brush.fillText('Fps: ' + this.fps.toFixed(0), 10, 20);
+        this.brush.fillText('Fps: ' + this.fps.toFixed(0), 20, 30);
         requestAnimationFrame(this.gameLoop.bind(this))
     }
 }
