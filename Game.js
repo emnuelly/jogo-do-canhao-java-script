@@ -2,6 +2,7 @@ class Game {
     constructor(engine, controls) {
         this.gameEngine = engine
         this.controls = controls
+        this.playerOne = true;
 
         this.controls.buttonShoot.addEventListener('click', (e) => {
             e.preventDefault();
@@ -21,17 +22,14 @@ class Game {
     start() {
         this.gameEngine.start();
         this.controls.buttonShoot.style.display = 'block';
-        // this.controls.buttonRestart.style.display = "none";
     }
 
     endGame() {
         this.controls.buttonShoot.style.display = 'block';
-        // this.controls.buttonRestart.style.display = "block";
     }
 
     resetGame() {
         this.controls.buttonShoot.style.display = 'block';
-        // this.controls.buttonRestart.style.display = "none";
         let ball = this.gameEngine.findElement("ball");
         ball.reset();
     }
@@ -47,9 +45,14 @@ class Game {
             alert("Digite uma velocidade válida!");
 
         } else {
-            //let ball = this.gameEngine.findElement("ball");
-            //ball.apply(speed, angle);
-            myCannon1.shoot(speed, angle)
+            if (this.playerOne) {
+                myCannon1.shoot(speed, angle)
+                this.playerOne = false;
+            } else if (!this.playerOne) {
+                myCannon2.shoot(-speed, -angle)
+                this.playerOne = true;
+            }
+
             this.controls.buttonShoot.style.display = 'none';
         }
     }

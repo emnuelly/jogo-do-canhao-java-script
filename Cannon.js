@@ -9,12 +9,14 @@ class Cannon {
         this.image = new Image();
         this.flip = false;
         this.ball = null;
-        this.shootingPositionX = this.posX + 45;
-        this.shootingPositionY = this.posY + 45;
+        if (flip) {
+            this.shootingPositionX = this.posX - 20;
+        } else {
+            this.shootingPositionX = this.posX + 90;
+        }
+        this.shootingPositionY = this.posY;
         this.resolution = resolution
         this.shots = 0
-
-
         if (flip) {
             this.image.src = "img/cannon_2.png";
         } else {

@@ -12,6 +12,12 @@ let screen = document.querySelector("canvas");
 screen.setAttribute('height', resolution.height)
 screen.setAttribute('width', resolution.width)
 
+let hammer = new Hammer(screen);
+hammer.add(new Hammer.Pan({
+    direction: Hammer.DIRECTION_ALL,
+    threshold: 0
+}));
+
 let myEngine = new GameEngine(screen)
 
 // adiciona todos os elementos
