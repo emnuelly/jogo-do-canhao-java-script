@@ -22,13 +22,8 @@ class GameEngine {
         })
         return result;
     }
-    // drawLine(ev, initCoord) {
-       
-    //     console.log(ev.center)
-    // }
 
     gameLoop() {
-
         let timeFrame = (new Date()).getTime() - this.timeLastFrame;
         this.fps = 1000 / timeFrame;
         this.brush.beginPath();

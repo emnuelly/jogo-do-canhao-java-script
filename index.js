@@ -50,12 +50,12 @@ hammer.on("pan", ev => {
 let myCannon1 = new Cannon("cannon1", {
     x: 30,
     y: resolution.height - 95
-}, false, Ball, resolution, true);
+}, true, Ball, resolution);
 
 let myCannon2 = new Cannon("cannon2", {
     x: resolution.width - 90,
     y: resolution.height - 95
-}, true, Ball, resolution, false);
+}, false, Ball, resolution);
 
 
 

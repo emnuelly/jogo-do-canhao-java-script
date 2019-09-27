@@ -1,5 +1,5 @@
 class Cannon {
-    constructor(name, position, flip, ball, resolution, isPlayerOne) {
+    constructor(name, position, isPlayerOne, ball, resolution) {
         this.name = name;
         this.image = null
         this.posX = position.x
@@ -7,26 +7,32 @@ class Cannon {
         this.width = 70
         this.height = 70
         this.image = new Image();
-        this.flip = false;
         this.ball = null;
-        this.isPlayerOne = isPlayerOne
-        if (flip) {
-            this.shootingPositionX = this.posX - 20;
-        } else {
-            this.shootingPositionX = this.posX + 90;
-        }
+        this.isPlayerOne = isPlayerOne;
         this.shootingPositionY = this.posY;
         this.resolution = resolution
-        this.shots = 0
-        if (flip) {
-            this.image.src = "img/cannon_2.png";
-        } else {
-            this.image.src = "img/cannon.png";
-        }
         this.flagImage1 = new Image();
         this.flagImage1.src = "img/flag.png";
         this.flagImage2 = new Image();
         this.flagImage2.src = "img/flag.png";
+        this.enemyPosition = {
+            x: 0,
+            y: 0,
+            size: 70
+        }
+
+        if (isPlayerOne) {
+            this.shootingPositionX = this.posX + 75;
+            this.image.src = "img/cannon.png";
+            this.enemyPosition.x = resolution.width - 90
+            this.enemyPosition.y = resolution.height - 95
+
+        } else {
+            this.shootingPositionX = this.posX - 10;
+            this.image.src = "img/cannon_2.png";
+            this.enemyPosition.x = 30
+            this.enemyPosition.y = resolution.height - 95
+        }
     }
 
     update() {
@@ -34,12 +40,8 @@ class Cannon {
     }
 
     shoot(speed, angle) {
-        this.shots++;
-        this.ball = new Ball("ball", this.shootingPositionX, this.shootingPositionY, this.resolution);
+        this.ball = new Ball("ball", this.shootingPositionX, this.shootingPositionY, this.resolution, this.enemyPosition);
         this.ball.apply(speed, angle)
-        this.ball.addCollideListener(() => {
-            cannonGame.endGame();
-        });
         cannonGame.addElement(this.ball)
     }
 
