@@ -2,6 +2,12 @@ class Game {
     constructor(engine) {
         this.gameEngine = engine
         this.playerOne = true;
+        this.controls = null;
+    }
+
+    setControls(controls) {
+        this.controls = controls;
+        controls.start(this);
     }
 
     addElement(gameElement) {
@@ -12,12 +18,13 @@ class Game {
         this.gameEngine.start();
     }
 
-    endGame() {
-    }
+    endGame() {}
 
-    resetGame() {
-    }
+    resetGame() {}
 
+    getGameEngine() {
+        return this.gameEngine
+    }
     play(speed, angle) {
         if (this.playerOne) {
             myCannon1.shoot(-speed, -angle)

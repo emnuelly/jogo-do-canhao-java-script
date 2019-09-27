@@ -6,30 +6,25 @@ class Background {
         this.width = resolution.width;
         this.height = resolution.height;
         this.clouds = [];
-        this.image = null;
-        this.image = new Image();
         this.cloudsImage = []
+        this.numeroNuvems = 50
+
         this.cloudsImage.push('img/cloud.png')
         this.cloudsImage.push('img/clouds.png')
-        this.numeroNuvems = 6
-
+        let layer = 0;
         for (let i = 0; i < this.numeroNuvems; i++) {
+            let cloudImage = new Image();
+            cloudImage.src = this.cloudsImage[Math.round((Math.random() * (this.cloudsImage.length - 1)))]
             this.clouds.push({
-                image: this.cloudsImage[Math.round((Math.random() * (this.cloudsImage.length - 1)))],
+                obj: cloudImage,
                 x: Math.random() * screen.width,
                 y: Math.random() * screen.height / 2,
                 width: 80 + Math.random() * 150,
                 height: 70 + Math.random() * 120,
-                speed: 0.2 + Math.random() * 3
+                speed: 0.2 + layer * 3
             })
+            if (i % 3 == 0) layer += 0.2;
         }
-
-
-        this.clouds.forEach(e => {
-            e.obj = new Image();
-            e.obj.src = e.image
-        })
-
     }
 
     update() {
@@ -51,12 +46,5 @@ class Background {
             brush.drawImage(el.obj, el.x, el.y, el.width, el.height);
         });
         brush.fill();
-
-        // brush.beginPath()
-        // brush.moveTo(initCoord.x, initCoord.y)
-        // brush.strokeStyle = '#ff0000'
-        // brush.lineTo(finalCoord.x, finalCoord.y)
-        // brush.lineWidth = 25;
-        // brush.stroke()
     }
 }

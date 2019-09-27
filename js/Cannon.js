@@ -1,5 +1,5 @@
 class Cannon {
-    constructor(name, position, isPlayerOne, ball, resolution) {
+    constructor(name, position, isPlayerOne, resolution) {
         this.name = name;
         this.image = null
         this.posX = position.x
@@ -7,7 +7,6 @@ class Cannon {
         this.width = 70
         this.height = 70
         this.image = new Image();
-        this.ball = null;
         this.isPlayerOne = isPlayerOne;
         this.shootingPositionY = this.posY;
         this.resolution = resolution
@@ -40,18 +39,25 @@ class Cannon {
     }
 
     shoot(speed, angle) {
-        this.ball = new Ball("ball", this.shootingPositionX, this.shootingPositionY, this.resolution, this.enemyPosition);
-        this.ball.apply(speed, angle)
-        cannonGame.addElement(this.ball)
+        let ball = new Ball("ball", this.shootingPositionX, this.shootingPositionY, this.resolution, this.enemyPosition);
+        ball.apply(speed, angle)
+        cannonGame.addElement(ball)
     }
 
     draw(brush) {
-        if (cannonGame.playerOne == this.isPlayerOne) {
 
-            brush.drawImage(this.flagImage1,
-                this.isPlayerOne ? this.posX - 10 : this.posX + 45, this.posY, 50, 50)
+        let isMyTurn = cannonGame.playerOne == this.isPlayerOne;
+
+        if (isMyTurn) {
+            this.drawFlag(brush);
         }
+
         brush.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+    }
+
+    drawFlag(brush) {
+        brush.drawImage(this.flagImage1,
+            this.isPlayerOne ? this.posX - 10 : this.posX + 45, this.posY, 50, 50)
     }
 
 }

@@ -22,7 +22,7 @@ class Ball {
 
         if ((this.positionX >= this.enemyPosition.x && this.positionX <= this.enemyPosition.x + this.enemyPosition.size) &&
             (this.positionY >= this.enemyPosition.y && this.positionY <= this.enemyPosition.y + this.enemyPosition.size)) {
-            alert('voce ganhou!')
+            confirm("Você ganhou!!!");
             location.reload()
         }
 
@@ -38,6 +38,12 @@ class Ball {
         brush.beginPath();
         brush.arc(this.positionX, this.positionY, this.radius, 0, 2 * Math.PI);
         brush.fill();
+    }
+
+    onCollide(object) {
+        if (object.name == "cannon") {
+            // faz a logica de ganhou
+        }
     }
 
     apply(speed, angle) {
