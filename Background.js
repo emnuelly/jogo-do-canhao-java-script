@@ -8,38 +8,22 @@ class Background {
         this.clouds = [];
         this.image = null;
         this.image = new Image();
-        this.clouds.push({
-            image: "img/cloud.png",
-            x: 800,
-            y: Math.random() * screen.height/ 2,
-            width: 230,
-            height: 150,
-            speed: 2
-        })
-        this.clouds.push({
-            image: "img/clouds.png",
-            x: 1000,
-            y: Math.random() * screen.height/ 2,
-            width: 200,
-            height: 150,
-            speed: 1
-        })
-        this.clouds.push({
-            image: "img/cloud.png",
-            x: 1200,
-            y: Math.random() * screen.height/ 2,
-            width: 100,
-            height: 80,
-            speed: 1.5
-        })
-        this.clouds.push({
-            image: "img/clouds.png",
-            x: 1200,
-            y: Math.random() * screen.height/ 2,
-            width: 150,
-            height: 150,
-            speed: 0.5
-        })
+        this.cloudsImage = []
+        this.cloudsImage.push('img/cloud.png')
+        this.cloudsImage.push('img/clouds.png')
+        this.numeroNuvems = 6
+
+        for (let i = 0; i < this.numeroNuvems; i++) {
+            this.clouds.push({
+                image: this.cloudsImage[Math.round((Math.random() * (this.cloudsImage.length - 1)))],
+                x: Math.random() * screen.width,
+                y: Math.random() * screen.height / 2,
+                width: 80 + Math.random() * 150,
+                height: 70 + Math.random() * 120,
+                speed: 0.2 + Math.random() * 3
+            })
+        }
+
 
         this.clouds.forEach(e => {
             e.obj = new Image();
@@ -57,7 +41,10 @@ class Background {
         })
     }
 
+
+
     draw(brush) {
+
         brush.beginPath()
         brush.fillStyle = '#ededed'
         brush.fillRect(this.posX, this.posY, this.width, this.height)
@@ -66,5 +53,13 @@ class Background {
             brush.drawImage(el.obj, el.x, el.y, el.width, el.height);
         });
         brush.fill();
+
+        brush.beginPath()
+        brush.moveTo(initCoord.x, initCoord.y)
+        brush.strokeStyle = '#ff0000'
+        brush.lineTo(finalCoord.x, finalCoord.y)
+        brush.lineWidth = 25;
+        brush.stroke()
+        console.log(finalCoord)
     }
 }

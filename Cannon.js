@@ -44,8 +44,8 @@ class Cannon {
     }
 
     draw(brush) {
-        console.log(cannonGame.playerOne)
         if (cannonGame.playerOne == this.isPlayerOne) {
+
             brush.drawImage(this.flagImage1,
                 this.isPlayerOne ? this.posX - 10 : this.posX + 45, this.posY, 50, 50)
         }

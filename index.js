@@ -14,20 +14,38 @@ hammer.add(new Hammer.Pan({
     threshold: 0
 }));
 
-hammer.on("pan", ev => {
-
-    if (ev.isFinal) {
-        console.log(ev.angle, ev.distance)
-        cannonGame.play(ev.distance, ev.angle)
-    }
-})
-
-
+let isDragging = false;
+let initCoord = {
+    x: 0,
+    y: 0
+}
+let finalCoord = {
+    x: 0,
+    y: 0
+}
 let myEngine = new GameEngine(screen)
 let myFloor = new Floor("floor", resolution);
 let myBackground = new Background("background", resolution);
-
 let cannonGame = new Game(myEngine)
+
+hammer.on("pan", ev => {
+
+    if (!isDragging) {
+        initCoord = ev.center
+    }
+    // myEngine.drawLine(ev, initCoord)
+
+    if (ev.isFinal) {
+        cannonGame.play(ev.distance, ev.angle)
+
+    }
+    finalCoord = ev.center
+})
+
+
+
+
+
 
 let myCannon1 = new Cannon("cannon1", {
     x: 30,
@@ -45,5 +63,6 @@ cannonGame.addElement(myBackground);
 cannonGame.addElement(myFloor);
 cannonGame.addElement(myCannon1);
 cannonGame.addElement(myCannon2);
+
 
 cannonGame.start();
