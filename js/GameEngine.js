@@ -1,7 +1,7 @@
 class GameEngine {
     constructor(screen) {
         this.gravity = 800;
-        this.wind = null
+        this.wind = 0
         this.screen = screen
         this.brush = this.screen.getContext('2d')
         this.gameElements = []
@@ -9,7 +9,7 @@ class GameEngine {
         this.fps = 0;
         this.timeLastFrame = (new Date()).getTime();
 
-        this.changeWind()
+        // this.changeWind()
     }
 
     getRandomInt(min, max) {
@@ -64,6 +64,7 @@ class GameEngine {
         this.brush.fillStyle = "#000000";
         this.brush.font = '18px sans-serif';
         this.brush.fillText('Fps: ' + this.fps.toFixed(0), 20, 30);
+
     }
 
 }

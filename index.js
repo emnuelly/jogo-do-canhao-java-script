@@ -1,3 +1,4 @@
+
 let resolution = {
     width: window.innerWidth,
     height: window.innerHeight - 5
@@ -14,7 +15,7 @@ let myEngine = new GameEngine(screen)
 let myFloor = new Floor("floor", resolution);
 let myBackground = new Background("background", resolution);
 let cannonGame = new Game(myEngine)
-let controls = new TouchControls(screen);
+let controls = new TouchControls(myEngine, screen, resolution);
 let myRooster = new Rooster(myEngine)
 
 let myCannon1 = new Cannon(myEngine, "cannon1", {

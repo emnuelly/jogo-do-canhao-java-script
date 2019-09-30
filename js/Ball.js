@@ -12,6 +12,7 @@ class Ball {
         this.enabled = false;
         this.resolution = resolution;
         this.enemyPosition = enemyPosition
+        this.posicaoXFinal = 0;
     }
 
     update(fps) {
@@ -40,6 +41,7 @@ class Ball {
         brush.fillStyle = 'black';
         brush.beginPath();
         brush.arc(this.positionX, this.positionY, this.radius, 0, 2 * Math.PI);
+       
         brush.fill();
     }
 
@@ -53,5 +55,7 @@ class Ball {
         this.enabled = true
         this.speedX = Math.cos(angle * Math.PI / 180) * speed;
         this.speedY = -Math.sin(angle * Math.PI / 180) * speed;
+
+       
     }
 }

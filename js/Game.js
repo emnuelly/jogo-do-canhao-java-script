@@ -35,6 +35,6 @@ class Game {
             this.playerOne = true;
 
         }
-        this.gameEngine.changeWind()
+        // this.gameEngine.changeWind()
     }
 }

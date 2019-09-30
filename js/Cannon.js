@@ -43,7 +43,7 @@ class Cannon {
         let ball = new Ball(this.gameEngine, "ball", this.shootingPositionX, this.shootingPositionY, this.resolution, this.enemyPosition);
         ball.apply(speed, angle)
         cannonGame.addElement(ball)
-        
+
     }
 
     draw(brush) {
