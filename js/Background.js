@@ -1,18 +1,21 @@
 class Background {
     constructor(name, resolution) {
         this.name = name;
-        this.posX = 0
-        this.posY = 0
+        this.posX = 0;
+        this.posY = 0;
         this.width = resolution.width;
         this.height = resolution.height;
         this.clouds = [];
-        this.cloudsImage = []
-        this.numeroNuvems = 50
+        this.cloudsImage = [];
+        this.cloudNumber = 10;
+        
+
+
 
         this.cloudsImage.push('img/cloud.png')
         this.cloudsImage.push('img/clouds.png')
         let layer = 0;
-        for (let i = 0; i < this.numeroNuvems; i++) {
+        for (let i = 0; i < this.cloudNumber; i++) {
             let cloudImage = new Image();
             cloudImage.src = this.cloudsImage[Math.round((Math.random() * (this.cloudsImage.length - 1)))]
             this.clouds.push({
@@ -25,6 +28,7 @@ class Background {
             })
             if (i % 3 == 0) layer += 0.2;
         }
+
     }
 
     update() {

@@ -1,11 +1,21 @@
 class GameEngine {
     constructor(screen) {
+        this.gravity = 800;
+        this.wind = null
         this.screen = screen
         this.brush = this.screen.getContext('2d')
         this.gameElements = []
         // static objects
         this.fps = 0;
         this.timeLastFrame = (new Date()).getTime();
+
+        this.changeWind()
+    }
+
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return (Math.floor(Math.random() * (max - min + 1)) + min).toFixed(0);
     }
 
     start() {
@@ -30,6 +40,10 @@ class GameEngine {
         requestAnimationFrame(this.gameLoop.bind(this))
     }
 
+    changeWind() {
+        this.wind = this.getRandomInt(-750, 750)
+    }
+
     checkColissions() {
         // percorre todos os objetos
         // verifica se existe colissão entre os dois
@@ -48,7 +62,7 @@ class GameEngine {
         });
         this.timeLastFrame = (new Date()).getTime();
         this.brush.fillStyle = "#000000";
-        this.brush.font = '18px serif';
+        this.brush.font = '18px sans-serif';
         this.brush.fillText('Fps: ' + this.fps.toFixed(0), 20, 30);
     }
 

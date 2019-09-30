@@ -1,6 +1,6 @@
 class Game {
-    constructor(engine) {
-        this.gameEngine = engine
+    constructor(gameEngine) {
+        this.gameEngine = gameEngine
         this.playerOne = true;
         this.controls = null;
     }
@@ -35,5 +35,6 @@ class Game {
             this.playerOne = true;
 
         }
+        this.gameEngine.changeWind()
     }
 }

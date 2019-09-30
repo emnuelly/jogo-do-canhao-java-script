@@ -1,5 +1,6 @@
 class Cannon {
-    constructor(name, position, isPlayerOne, resolution) {
+    constructor(gameEngine, name, position, isPlayerOne, resolution) {
+        this.gameEngine = gameEngine
         this.name = name;
         this.image = null
         this.posX = position.x
@@ -39,9 +40,10 @@ class Cannon {
     }
 
     shoot(speed, angle) {
-        let ball = new Ball("ball", this.shootingPositionX, this.shootingPositionY, this.resolution, this.enemyPosition);
+        let ball = new Ball(this.gameEngine, "ball", this.shootingPositionX, this.shootingPositionY, this.resolution, this.enemyPosition);
         ball.apply(speed, angle)
         cannonGame.addElement(ball)
+        
     }
 
     draw(brush) {

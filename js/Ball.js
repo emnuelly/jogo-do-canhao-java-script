@@ -1,11 +1,13 @@
 class Ball {
-    constructor(name, startPosX, startPosY, resolution, enemyPosition) {
+    constructor(gameEngine, name, startPosX, startPosY, resolution, enemyPosition) {
+        this.gameEngine = gameEngine;
         this.name = name;
         this.positionX = startPosX;
         this.positionY = startPosY;
         this.speedX = 0;
         this.speedY = 0;
-        this.gravity = 800;
+        this.gravity = this.gameEngine.gravity;
+        this.wind = this.gameEngine.wind;
         this.radius = 11;
         this.enabled = false;
         this.resolution = resolution;
@@ -14,8 +16,9 @@ class Ball {
 
     update(fps) {
         if (this.enabled) {
+            this.speedY = this.speedY + (this.gravity) / fps
+            this.speedX = this.speedX + this.wind / fps
             this.positionX += this.speedX / fps;
-            this.speedY = this.speedY + this.gravity / fps
             this.positionY = this.positionY + this.speedY / fps;
         }
 
