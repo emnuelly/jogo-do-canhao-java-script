@@ -19,8 +19,8 @@ class GameEngine {
     return (Math.floor(Math.random() * (max - min + 1)) + min).toFixed(0);
   }
 
-  start() {
-    requestAnimationFrame(this.gameLoop.bind(this));
+  changeWind() {
+    this.wind = this.getRandomInt(-750, 750);
   }
 
   addElement(gameElement) {
@@ -35,14 +35,14 @@ class GameEngine {
     return result;
   }
 
+  start() {
+    requestAnimationFrame(this.gameLoop.bind(this));
+  }
+
   gameLoop() {
     //this.checkColissions();
     this.render();
     requestAnimationFrame(this.gameLoop.bind(this));
-  }
-
-  changeWind() {
-    this.wind = this.getRandomInt(-750, 750);
   }
 
   checkColissions() {

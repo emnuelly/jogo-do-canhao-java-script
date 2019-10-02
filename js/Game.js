@@ -25,6 +25,7 @@ class Game {
   getGameEngine() {
     return this.gameEngine;
   }
+
   play(speed, angle) {
     if (this.playerOne) {
       myCannon1.shoot(-speed, -angle);
