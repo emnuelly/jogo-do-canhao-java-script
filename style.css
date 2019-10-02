@@ -1,40 +1,39 @@
 html,
 body {
-    padding: 0;
-    box-sizing: border-box;
-    margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
-
 .inputs {
-    margin-top: 20px;
-    height: 70px;
+  margin-top: 20px;
+  height: 70px;
 }
 
 .input-container {
-    width: 200px;
-    height: 30px;
-    margin-left: 10px;
-    border-radius: 10px;
-    border: none;
-    border: 1px solid #d1d0d0;
+  width: 200px;
+  height: 30px;
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
+  border: 1px solid #d1d0d0;
 }
 
 input:focus {
-    border: 1px solid #d1d0d0;
-    outline: 0;
+  border: 1px solid #d1d0d0;
+  outline: 0;
 }
 
 .button-shoot {
-    background-color: #1aab00;
-    border: none;
-    margin-left: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    color: aliceblue;
+  background-color: #1aab00;
+  border: none;
+  margin-left: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  color: aliceblue;
 }
 
 .button-shoot:hover {
-    cursor: pointer;
-    background-color: black;
+  cursor: pointer;
+  background-color: black;
 }
