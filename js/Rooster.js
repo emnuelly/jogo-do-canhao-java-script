@@ -2,9 +2,9 @@ class Rooster {
   constructor(gameEngine) {
     this.gameEngine = gameEngine;
     this.roosterRight = new Image();
-    this.roosterRight.src = 'img/rooster.png';
+    this.roosterRight.src = 'img/roosterRight.png';
     this.roosterLeft = new Image();
-    this.roosterLeft.src = 'img/roosterflip.png';
+    this.roosterLeft.src = 'img/roosterLeft.png';
     this.roosterInit = {
       x: resolution.width - 90,
       y: 10

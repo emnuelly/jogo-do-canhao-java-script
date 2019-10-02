@@ -27,12 +27,12 @@ class Cannon {
 
     if (isPlayerOne) {
       this.shootingPositionX = this.position.x + 75;
-      this.image.src = 'img/cannon.png';
+      this.image.src = 'img/cannonLeft.png';
       this.enemyPosition.x = resolution.width - 90;
       this.enemyPosition.y = resolution.height - 95;
     } else {
       this.shootingPositionX = this.position.x - 10;
-      this.image.src = 'img/cannon_2.png';
+      this.image.src = 'img/cannonRight.png';
       this.enemyPosition.x = 30;
       this.enemyPosition.y = resolution.height - 95;
     }
