@@ -6,19 +6,18 @@ class BallTrajectory {
     this.speedY = 0;
   }
 
-  drawCurve(brush) {
-    brush.beginPath();
-    brush.lineWidth = 3;
-    brush.strokeStyle = this.color;
-    brush.moveTo(60, resolution.height - 95);
-    brush.quadraticCurveTo(105 + this.calcImpactPointX() / 2, this.calcMaxHeight(), this.calcImpactPointX() + 105, resolution.height - 75);
-    brush.stroke();
-    console.log(this.calcMaxHeight());
+  setAngleAndSpeed(angle, speed) {
+    this.angle = angle;
+    this.speed = speed;
+  }
+
+  calcSpeedXnY() {
+    this.speedY = -Math.sin((this.angle * Math.PI) / 180) * this.speed;
+    this.speedX = Math.cos((this.angle * Math.PI) / 180) * this.speed;
   }
 
   calcImpactPointX() {
-    this.speedY = -Math.sin((this.angle * Math.PI) / 180) * this.speed;
-    this.speedX = Math.cos((this.angle * Math.PI) / 180) * this.speed;
+    this.calcSpeedXnY();
     let deltaT = (2 * this.speedY) / this.gravity;
     return deltaT * this.speedX;
   }
@@ -36,5 +35,13 @@ class BallTrajectory {
   draw(brush) {
     brush.fillRect(this.calcImpactPointX() / 2 + 30, this.calcMaxHeight(), 30, 30);
     brush.fillRect(this.calcImpactPointX() + 105, this.resolution.height - 50, 30, 30);
+
+    brush.beginPath();
+    brush.lineWidth = 3;
+    brush.strokeStyle = this.color;
+    brush.moveTo(60, resolution.height - 95);
+    brush.quadraticCurveTo(105 + this.calcImpactPointX() / 2, this.calcMaxHeight(), this.calcImpactPointX() + 105, resolution.height - 75);
+    brush.stroke();
+    console.log(this.calcMaxHeight());
   }
 }
