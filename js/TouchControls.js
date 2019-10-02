@@ -29,15 +29,9 @@ class TouchControls {
         this.isDragging = true;
       }
 
+      this.arc.clearTrajectory()
       this.shootLine.setActualCoord(ev.center);
-
       this.arc.setAngleAndSpeed(ev.angle, ev.distance * 3)
-
-
-      // this.shootLine.angle = ev.angle;
-      // this.shootLine.speed = ev.distance * 3;
-
-      // this.shootLine.calcImpactPointX();
       this.arc.calcCoordMap();
 
 
@@ -46,8 +40,6 @@ class TouchControls {
         this.shootLine.setColor('transparent');
         game.play(ev.distance * 3, ev.angle);
         this.isDragging = false;
-
-
       }
     });
 

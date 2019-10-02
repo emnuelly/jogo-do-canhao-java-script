@@ -10,7 +10,7 @@ class GameEngine {
     this.fps = 0;
     this.timeLastFrame = new Date().getTime();
 
-    // this.changeWind()
+    this.changeWind()
   }
 
   getRandomInt(min, max) {

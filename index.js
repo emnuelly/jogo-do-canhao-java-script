@@ -9,7 +9,7 @@ screen.setAttribute('width', resolution.width);
 
 let myEngine = new GameEngine(screen);
 let myFloor = new Floor('floor', resolution);
-let myBackground = new Background('background', resolution);
+let myBackground = new Background(myEngine, 'background', resolution);
 let cannonGame = new Game(myEngine);
 let controls = new TouchControls(myEngine, screen, resolution);
 

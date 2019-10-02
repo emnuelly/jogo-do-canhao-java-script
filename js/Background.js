@@ -1,5 +1,6 @@
 class Background {
-  constructor(name, resolution) {
+  constructor(gameEngine, name, resolution) {
+    this.gameEngine = gameEngine;
     this.name = name;
     this.posX = 0;
     this.posY = 0;
@@ -8,6 +9,8 @@ class Background {
     this.clouds = [];
     this.cloudsImage = [];
     this.cloudNumber = 10;
+    // this.wind = gameEngine.wind;
+
 
     this.cloudsImage.push('img/cloud.png');
     this.cloudsImage.push('img/clouds.png');
@@ -28,6 +31,7 @@ class Background {
   }
 
   update() {
+    // this.wind = this.gameEngine.wind;
     this.clouds.forEach(el => {
       el.x -= el.speed;
       if (el.x < -el.width * 2) {

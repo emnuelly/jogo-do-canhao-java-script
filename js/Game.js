@@ -34,6 +34,6 @@ class Game {
       myCannon2.shoot(-speed, -angle);
       this.playerOne = true;
     }
-    // this.gameEngine.changeWind()
+    this.gameEngine.changeWind()
   }
 }

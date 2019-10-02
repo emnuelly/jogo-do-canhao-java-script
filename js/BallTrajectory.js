@@ -23,15 +23,36 @@ class BallTrajectory {
     }
   }
 
+
+  // stopTrajectoryX(x) {
+  //   if (this.game.playerOne) {
+  //     console.log(x, (-Math.cos((this.angle * Math.PI) / 180) * this.speed))
+  //     return (x >= this.calcMidTrajectoryPoint((-Math.cos((this.angle * Math.PI) / 180) * this.speed)))
+  //   }
+  //   return (x <= this.calcMidTrajectoryPoint((-Math.cos((this.angle * Math.PI) / 180) * this.speed)))
+  // }
+
+  // calcMidTrajectoryPoint(speedX) {
+  //   let time = this.speedY / this.gameEngine.gravity / 2;
+  //   if (this.game.playerOne) {
+  //     return this.startPoint.x + time * speedX
+  //   }
+  //   return this.startPoint.x - time * speedX;
+  // }
+
   setAngleAndSpeed(angle, speed) {
     this.angle = angle;
     this.speed = speed;
   }
 
   calcSpeedXnY() {
-    // console.log("cos speed X " + -Math.cos((this.angle * Math.PI) / 180) * this.speed, "sen speed y " + (-Math.sin((this.angle * Math.PI) / 180) * this.speed))
-    this.speedX = (-Math.cos((this.angle * Math.PI) / 180) * this.speed); // + this.gameEngine.wind;
-    this.speedY = (-Math.sin((this.angle * Math.PI) / 180) * this.speed) + this.gameEngine.gravity / this.gameEngine.fps
+    this.speedX = (-Math.cos((this.angle * Math.PI) / 180) * this.speed);
+    this.speedY = (-Math.sin((this.angle * Math.PI) / 180) * this.speed);
+  }
+
+  updateSpeed() {
+    this.speedX += this.gameEngine.wind / this.gameEngine.fps;
+    this.speedY += this.gameEngine.gravity / this.gameEngine.fps;
   }
 
   calcCoordMap() {
@@ -39,25 +60,25 @@ class BallTrajectory {
     this.defineStartPoint();
     this.calcSpeedXnY();
 
-
-
-    // console.log('x: ' + Math.round(this.speedX), 'y: ' + Math.round(this.speedY))
-
-
     let coord = {
       x: this.startPoint.x,
       y: this.startPoint.y
     }
     let i = 0;
-    while (i < 10) {
+    let boolean = null
+    while (i < this.speed / 27) {
+      // boolean = this.stopTrajectoryX(coord.x)
 
       coord.x = coord.x + (this.speedX / this.gameEngine.fps);
       coord.y = coord.y + (this.speedY / this.gameEngine.fps);
-      this.coordMap.push(coord);
+      // console.log("iteracao: " + i + " : " + coord.x, coord.y)
+      this.coordMap.push({
+        x: coord.x,
+        y: coord.y
+      });
+      // console.log(speedX, speedY)
 
-      this.calcSpeedXnY();
-      console.log(i, coord)
-
+      this.updateSpeed();
       i++;
     }
 
@@ -81,11 +102,11 @@ class BallTrajectory {
       brush.fill();
     }
 
-    let radius = 3;
+    let radius = 2;
     brush.fillStyle = this.color;
     this.coordMap.forEach(function (el) {
       drawPoint(brush, el.x, el.y, radius);
     })
-    this.clearTrajectory()
+    // this.clearTrajectory()
   }
 }
