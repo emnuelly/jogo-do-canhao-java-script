@@ -40,6 +40,7 @@ class Background {
     brush.beginPath();
     brush.fillStyle = '#ededed';
     brush.fillRect(this.posX, this.posY, this.width, this.height);
+
     this.clouds.forEach(el => {
       brush.drawImage(el.obj, el.x, el.y, el.width, el.height);
     });
