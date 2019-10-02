@@ -1,11 +1,12 @@
 class GameEngine {
   constructor(screen) {
-    this.gravity = 800;
-    this.wind = 0;
     this.screen = screen;
     this.brush = this.screen.getContext('2d');
     this.gameElements = [];
-    // static objects
+
+    this.gravity = 800;
+    this.wind = 0;
+
     this.fps = 0;
     this.timeLastFrame = new Date().getTime();
 
@@ -35,7 +36,7 @@ class GameEngine {
   }
 
   gameLoop() {
-    this.checkColissions();
+    //this.checkColissions();
     this.render();
     requestAnimationFrame(this.gameLoop.bind(this));
   }
@@ -53,13 +54,12 @@ class GameEngine {
   render() {
     let timeFrame = new Date().getTime() - this.timeLastFrame;
     this.fps = 1000 / timeFrame;
-    this.brush.beginPath();
-    this.brush.clearRect(0, 0, this.screen.width, this.screen.height);
-    this.brush.fill();
+
     this.gameElements.forEach(element => {
       element.update(this.fps);
       element.draw(this.brush);
     });
+
     this.timeLastFrame = new Date().getTime();
     this.brush.fillStyle = '#000000';
     this.brush.font = '18px sans-serif';
