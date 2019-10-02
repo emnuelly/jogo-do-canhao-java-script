@@ -20,7 +20,7 @@ class Ball {
       this.speedY = this.speedY + this.gravity / fps;
       this.speedX = this.speedX + this.wind / fps;
       this.positionX += this.speedX / fps;
-      this.positionY = this.positionY + this.speedY / fps;
+      this.positionY += this.speedY / fps;
     }
 
     if (this.positionX >= this.enemyPosition.x && this.positionX <= this.enemyPosition.x + this.enemyPosition.size && (this.positionY >= this.enemyPosition.y && this.positionY <= this.enemyPosition.y + this.enemyPosition.size)) {
@@ -28,7 +28,7 @@ class Ball {
       location.reload();
     }
 
-    if (this.positionY >= resolution.height - 20) {
+    if (this.positionY >= resolution.height - 35) {
       this.speedX = 0;
       this.speedY = 0;
       this.enabled = false;
@@ -39,15 +39,14 @@ class Ball {
     brush.fillStyle = 'black';
     brush.beginPath();
     brush.arc(this.positionX, this.positionY, this.radius, 0, 2 * Math.PI);
-
     brush.fill();
   }
 
-  onCollide(object) {
-    if (object.name == 'cannon') {
-      // faz a logica de ganhou
-    }
-  }
+  // onCollide(object) {
+  //   if (object.name == 'cannon') {
+  //     faz a logica de ganhou
+  //   }
+  // }
 
   apply(speed, angle) {
     this.enabled = true;

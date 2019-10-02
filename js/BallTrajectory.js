@@ -1,9 +1,26 @@
 class BallTrajectory {
-  constructor() {
+  constructor(gameEngine, game, resolution) {
+    this.game = game;
+    this.gameEngine = gameEngine;
+
+    this.resolution = resolution;
+    this.coordMap = [];
+
     this.angle = null;
     this.speed = null;
+
     this.speedX = 0;
     this.speedY = 0;
+
+    this.color = 'red';
+  }
+
+  defineStartPoint() {
+    if (this.game.playerOne) {
+      this.startPoint = this.gameEngine.findElement('cannonLeft').shootingPosition
+    } else {
+      this.startPoint = this.gameEngine.findElement('cannonRight').shootingPosition
+    }
   }
 
   setAngleAndSpeed(angle, speed) {
@@ -12,36 +29,63 @@ class BallTrajectory {
   }
 
   calcSpeedXnY() {
-    this.speedY = -Math.sin((this.angle * Math.PI) / 180) * this.speed;
-    this.speedX = Math.cos((this.angle * Math.PI) / 180) * this.speed;
+    // console.log("cos speed X " + -Math.cos((this.angle * Math.PI) / 180) * this.speed, "sen speed y " + (-Math.sin((this.angle * Math.PI) / 180) * this.speed))
+    this.speedX = (-Math.cos((this.angle * Math.PI) / 180) * this.speed); // + this.gameEngine.wind;
+    this.speedY = (-Math.sin((this.angle * Math.PI) / 180) * this.speed) + this.gameEngine.gravity / this.gameEngine.fps
   }
 
-  calcImpactPointX() {
+  calcCoordMap() {
+    this.setColor('red')
+    this.defineStartPoint();
     this.calcSpeedXnY();
-    let deltaT = (2 * this.speedY) / this.gravity;
-    return deltaT * this.speedX;
+
+
+
+    // console.log('x: ' + Math.round(this.speedX), 'y: ' + Math.round(this.speedY))
+
+
+    let coord = {
+      x: this.startPoint.x,
+      y: this.startPoint.y
+    }
+    let i = 0;
+    while (i < 10) {
+
+      coord.x = coord.x + (this.speedX / this.gameEngine.fps);
+      coord.y = coord.y + (this.speedY / this.gameEngine.fps);
+      this.coordMap.push(coord);
+
+      this.calcSpeedXnY();
+      console.log(i, coord)
+
+      i++;
+    }
+
   }
 
-  calcMaxHeight() {
-    let tempoAlturaMaxima = this.speedY / this.gravity;
-    let pontoAlturaMaxima = this.speedY * tempoAlturaMaxima + (this.gravity * Math.pow(tempoAlturaMaxima, 2)) / 2;
+  clearTrajectory() {
+    this.coordMap = [];
+  }
 
-    console.log('Y max: ' + pontoAlturaMaxima);
-    return this.resolution.height - 95 - pontoAlturaMaxima;
+  setColor(color) {
+    this.color = color;
   }
 
   update() {}
 
   draw(brush) {
-    brush.fillRect(this.calcImpactPointX() / 2 + 30, this.calcMaxHeight(), 30, 30);
-    brush.fillRect(this.calcImpactPointX() + 105, this.resolution.height - 50, 30, 30);
 
-    brush.beginPath();
-    brush.lineWidth = 3;
-    brush.strokeStyle = this.color;
-    brush.moveTo(60, resolution.height - 95);
-    brush.quadraticCurveTo(105 + this.calcImpactPointX() / 2, this.calcMaxHeight(), this.calcImpactPointX() + 105, resolution.height - 75);
-    brush.stroke();
-    console.log(this.calcMaxHeight());
+    function drawPoint(brush, x, y, radius) {
+      brush.beginPath();
+      brush.arc(x, y, radius, 0, 2 * Math.PI);
+      brush.fill();
+    }
+
+    let radius = 3;
+    brush.fillStyle = this.color;
+    this.coordMap.forEach(function (el) {
+      drawPoint(brush, el.x, el.y, radius);
+    })
+    this.clearTrajectory()
   }
 }

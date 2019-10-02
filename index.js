@@ -16,8 +16,7 @@ let controls = new TouchControls(myEngine, screen, resolution);
 let myRooster = new Rooster(myEngine);
 let myCannon1 = new Cannon(
   myEngine,
-  'cannon1',
-  {
+  'cannonLeft', {
     x: 30,
     y: resolution.height - 95
   },
@@ -27,8 +26,7 @@ let myCannon1 = new Cannon(
 
 let myCannon2 = new Cannon(
   myEngine,
-  'cannon2',
-  {
+  'cannonRight', {
     x: resolution.width - 90,
     y: resolution.height - 95
   },

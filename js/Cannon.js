@@ -11,7 +11,11 @@ class Cannon {
 
     this.image = new Image();
     this.isPlayerOne = isPlayerOne;
-    this.shootingPositionY = this.position.y;
+    this.shootingPosition = {
+      x: null,
+      y: null
+    }
+    this.shootingPosition.y = this.position.y;
     this.resolution = resolution;
 
     this.flagImage1 = new Image();
@@ -26,12 +30,12 @@ class Cannon {
     };
 
     if (isPlayerOne) {
-      this.shootingPositionX = this.position.x + 75;
+      this.shootingPosition.x = this.position.x + 75;
       this.image.src = 'img/cannonLeft.png';
       this.enemyPosition.x = resolution.width - 90;
       this.enemyPosition.y = resolution.height - 95;
     } else {
-      this.shootingPositionX = this.position.x - 10;
+      this.shootingPosition.x = this.position.x - 10;
       this.image.src = 'img/cannonRight.png';
       this.enemyPosition.x = 30;
       this.enemyPosition.y = resolution.height - 95;
@@ -41,7 +45,7 @@ class Cannon {
   update() {}
 
   shoot(speed, angle) {
-    let ball = new Ball(this.gameEngine, 'ball', this.shootingPositionX, this.shootingPositionY, this.resolution, this.enemyPosition);
+    let ball = new Ball(this.gameEngine, 'ball', this.shootingPosition.x, this.shootingPosition.y, this.resolution, this.enemyPosition);
     ball.apply(speed, angle);
     cannonGame.addElement(ball);
   }
