@@ -18,15 +18,16 @@ class TouchControls {
     this.hammer.on('pan', ev => {
       if (!this.isDragging) {
         this.shootLine.setColor('gray');
-        this.shootLine.initCoord = ev.center;
+        this.shootLine.setInitCoord(ev.center);
         this.isDragging = true;
       }
 
-      this.shootLine.actualCoord = ev.center;
-      this.shootLine.angle = ev.angle;
-      this.shootLine.speed = ev.distance * 3;
+      this.shootLine.setActualCoord(ev.center);
 
-      this.shootLine.calcImpactPointX();
+      // this.shootLine.angle = ev.angle;
+      // this.shootLine.speed = ev.distance * 3;
+
+      // this.shootLine.calcImpactPointX();
 
       if (ev.isFinal) {
         this.shootLine.setColor('transparent');

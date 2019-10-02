@@ -12,8 +12,8 @@ let myFloor = new Floor('floor', resolution);
 let myBackground = new Background('background', resolution);
 let cannonGame = new Game(myEngine);
 let controls = new TouchControls(myEngine, screen, resolution);
-let myRooster = new Rooster(myEngine);
 
+let myRooster = new Rooster(myEngine);
 let myCannon1 = new Cannon(
   myEngine,
   'cannon1',
