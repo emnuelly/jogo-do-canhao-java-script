@@ -51,7 +51,7 @@ class BallTrajectory {
   }
 
   updateSpeed() {
-    this.speedX += this.gameEngine.wind / this.gameEngine.fps;
+    // this.speedX += this.gameEngine.wind / this.gameEngine.fps;
     this.speedY += this.gameEngine.gravity / this.gameEngine.fps;
   }
 
