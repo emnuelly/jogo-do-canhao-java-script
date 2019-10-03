@@ -58,7 +58,7 @@ class Ball {
     } else if (object.name == 'floor') {
       console.log('chao')
     } else if (object.name == 'wall') {
-      this.speedX = 0;
+      this.speedX = -this.speedX;
     }
   }
 
