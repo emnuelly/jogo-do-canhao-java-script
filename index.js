@@ -13,7 +13,7 @@ let myBackground = new Background(myEngine, 'background', resolution);
 let cannonGame = new Game(myEngine);
 let controls = new TouchControls(myEngine, screen, resolution);
 let myWall = new Wall('wall', {
-  x: resolution.width / 2,
+  x: (resolution.width / 2) - 25,
   y: 425
 }, 50, 175);
 
