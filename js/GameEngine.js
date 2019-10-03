@@ -3,12 +3,16 @@ class GameEngine {
     this.screen = screen;
     this.brush = this.screen.getContext('2d');
     this.gameElements = [];
+    this.colideElements = [];
 
     this.gravity = 800;
     this.wind = 0;
 
     this.fps = 0;
     this.timeLastFrame = new Date().getTime();
+
+    this.scorePlayerOne = 0;
+    this.scorePlayerTwo = 0;
 
     this.changeWind()
   }
@@ -27,6 +31,18 @@ class GameEngine {
     this.gameElements.push(gameElement);
   }
 
+  addColideElement(gameElement) {
+    this.colideElements.push(gameElement);
+  }
+
+  scorePlayer(playerOne) {
+    if (playerOne) {
+      this.scorePlayerOne++
+    } else {
+      this.scorePlayerTwo++
+    }
+  }
+
   findElement(name) {
     let result = null;
     this.gameElements.forEach(el => {
@@ -40,15 +56,26 @@ class GameEngine {
   }
 
   gameLoop() {
-    //this.checkColissions();
+    this.checkColissions();
     this.render();
     requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   checkColissions() {
-    // percorre todos os objetos
-    // verifica se existe colissão entre os dois
-    // chama o onCollide de ambos passando o objeto colidido
+    let ball = null
+    if (ball = this.findElement('ball')) {
+      if (ball.enabled) {
+        this.colideElements.forEach(function (el) {
+          if (((ball.positionX + ball.radius) > el.position.x) &&
+            ((ball.positionX - ball.radius) < el.position.x + el.width) &&
+            ((ball.positionY + ball.radius) > el.position.y) &&
+            ((ball.positionY - ball.radius) < el.position.y + el.height)) {
+            ball.onCollide(el)
+
+          }
+        })
+      }
+    }
   }
 
   render() {
@@ -64,5 +91,6 @@ class GameEngine {
     this.brush.fillStyle = '#000000';
     this.brush.font = '18px sans-serif';
     this.brush.fillText('Fps: ' + this.fps.toFixed(0), 20, 30);
+    this.brush.fillText('Score: ' + this.scorePlayerOne + "  " + this.scorePlayerTwo, this.screen.width / 2, 30);
   }
 }

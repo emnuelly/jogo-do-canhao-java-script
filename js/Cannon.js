@@ -4,8 +4,7 @@ class Cannon {
     this.name = name;
     this.image = null;
 
-    this.position = position;
-
+    this.position = position; // {x,y}
     this.width = 70;
     this.height = 70;
 

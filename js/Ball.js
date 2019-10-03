@@ -4,6 +4,7 @@ class Ball {
     this.name = name;
     this.positionX = startPosX;
     this.positionY = startPosY;
+    this.startingShootingPositionX = startPosX;
     this.speedX = 0;
     this.speedY = 0;
     this.gravity = this.gameEngine.gravity;
@@ -23,10 +24,11 @@ class Ball {
       this.positionY += this.speedY / fps;
     }
 
-    if (this.positionX >= this.enemyPosition.x && this.positionX <= this.enemyPosition.x + this.enemyPosition.size && (this.positionY >= this.enemyPosition.y && this.positionY <= this.enemyPosition.y + this.enemyPosition.size)) {
-      confirm('Você ganhou!!!');
-      location.reload();
-    }
+    // // colide conditions
+    // if (this.positionX >= this.enemyPosition.x && this.positionX <= this.enemyPosition.x + this.enemyPosition.size && (this.positionY >= this.enemyPosition.y && this.positionY <= this.enemyPosition.y + this.enemyPosition.size)) {
+    // confirm('Você ganhou!!!');
+    //   location.reload();
+    // }
 
     if (this.positionY >= resolution.height - 35) {
       this.speedX = 0;
@@ -42,11 +44,21 @@ class Ball {
     brush.fill();
   }
 
-  // onCollide(object) {
-  //   if (object.name == 'cannon') {
-  //     faz a logica de ganhou
-  //   }
-  // }
+  onCollide(object) {
+    if (object.name == 'cannonRight' && (this.startingShootingPositionX < this.resolution.width / 2)) {
+      // alert('esquerda ganha')
+      this.gameEngine.scorePlayer(true);
+      this.gameEngine.gameElements.pop()
+      console.log('jogador esquerda ganhou')
+    } else if (object.name == 'cannonLeft' && this.startingShootingPositionX > this.resolution.width / 2) {
+      // alert('direita ganha')
+      this.gameEngine.scorePlayer(false);
+      this.gameEngine.gameElements.pop()
+      console.log('jogador direita ganhou')
+    } else if (object.name == 'floor') {
+      console.log('chao')
+    }
+  }
 
   apply(speed, angle) {
     this.enabled = true;

@@ -8,7 +8,7 @@ class Background {
     this.height = resolution.height;
     this.clouds = [];
     this.cloudsImage = [];
-    this.cloudNumber = 10;
+    this.cloudNumber = 5 + 10 * Math.random();
     this.wind = gameEngine.wind;
 
 

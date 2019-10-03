@@ -34,6 +34,10 @@ let myCannon2 = new Cannon(
   resolution
 );
 
+myEngine.addColideElement(myCannon1);
+myEngine.addColideElement(myCannon2);
+myEngine.addColideElement(myFloor);
+
 cannonGame.addElement(myBackground);
 cannonGame.addElement(myFloor);
 cannonGame.addElement(myCannon1);
