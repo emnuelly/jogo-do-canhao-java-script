@@ -36,13 +36,11 @@ class Background {
   }
 
   generateRandWind(layer) {
-    this.updateWind()
-    console.log('wind: ' + this.wind / 100)
+    this.updateWind();
     if (this.wind > 0) {
       return Math.abs(this.wind / 100 + layer * 3);
     }
     return -Math.abs(this.wind / 100 - layer * 3);
-
   }
 
 
