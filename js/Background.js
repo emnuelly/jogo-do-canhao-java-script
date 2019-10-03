@@ -14,35 +14,41 @@ class Background {
 
     this.cloudsImage.push('img/cloud.png');
     this.cloudsImage.push('img/clouds.png');
-    this.layer = 0;
+    let layer = 0;
     for (let i = 0; i < this.cloudNumber; i++) {
       let cloudImage = new Image();
       cloudImage.src = this.cloudsImage[Math.round(Math.random() * (this.cloudsImage.length - 1))];
       this.clouds.push({
+        layer: layer,
         obj: cloudImage,
         x: Math.random() * screen.width,
         y: (Math.random() * screen.height) / 2,
         width: 80 + Math.random() * 150,
         height: 70 + Math.random() * 120,
-        speed: this.generateRandWind()
+        speed: this.generateRandWind(layer)
       });
-      if (i % 3 == 0) this.layer += 0.2;
+      if (i % 3 == 0) layer += 0.2;
     }
   }
 
-  generateRandWind() {
-    console.log('wind: ' + this.wind / 100, 'layer: ' + this.layer * 3)
+  updateWind() {
+    this.wind = this.gameEngine.wind;
+  }
+
+  generateRandWind(layer) {
+    this.updateWind()
+    console.log('wind: ' + this.wind / 100)
     if (this.wind > 0) {
-      return Math.abs(this.gameEngine.wind / 100 + this.layer * 3);
+      return Math.abs(this.wind / 100 + layer * 3);
     }
-    return -Math.abs(this.gameEngine.wind / 100 - this.layer * 3);
+    return -Math.abs(this.wind / 100 - layer * 3);
 
   }
 
 
   update() {
     this.clouds.forEach(el => {
-      el.speed = this.generateRandWind();
+      el.speed = this.generateRandWind(el.layer);
       el.x += el.speed;
 
       if (el.x < -this.width && el.speed < 0) {
