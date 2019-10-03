@@ -57,6 +57,8 @@ class Ball {
       console.log('jogador direita ganhou')
     } else if (object.name == 'floor') {
       console.log('chao')
+    } else if (object.name == 'wall') {
+      this.speedX = 0;
     }
   }
 
