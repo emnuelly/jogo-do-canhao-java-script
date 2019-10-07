@@ -9,11 +9,13 @@ class TouchControls {
     this.hammer = new Hammer(screen);
     this.isDragging = false;
 
-    this.isPlayerOne = false;
+    this.isPlayerOne = true;
   }
 
   start(game) {
-    this.arc = new BallTrajectory(this.gameEngine, game, this.resolution);
+
+    this.arc = new BallTrajectory(this.gameEngine, 'arc', game, this.resolution);
+
 
     this.hammer.add(
       new Hammer.Pan({
@@ -23,16 +25,18 @@ class TouchControls {
     );
 
     this.hammer.on('pan', ev => {
+
       if (!this.isDragging) {
         this.shootLine.setColor('gray');
         this.shootLine.setInitCoord(ev.center);
         this.isDragging = true;
       }
 
-      this.arc.clearTrajectory()
       this.shootLine.setActualCoord(ev.center);
-      this.arc.setAngleAndSpeed(ev.angle, ev.distance * 3)
-      this.arc.calcCoordMap();
+
+
+      this.arc.clearTrajectory()
+      this.arc.setAngleAndSpeed(ev.angle, ev.distance * 3);
 
 
       if (ev.isFinal) {

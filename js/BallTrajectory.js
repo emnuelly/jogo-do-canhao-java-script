@@ -1,5 +1,6 @@
 class BallTrajectory {
-  constructor(gameEngine, game, resolution) {
+  constructor(gameEngine, name, game, resolution) {
+    this.name = name;
     this.game = game;
     this.gameEngine = gameEngine;
 
@@ -16,16 +17,17 @@ class BallTrajectory {
   }
 
   defineStartPoint() {
-    if (this.game.playerOne) {
-      this.startPoint = this.gameEngine.findElement('cannonLeft').shootingPosition
+    if (this.name == 'arc') {
+      this.startPoint = this.gameEngine.findElement('cannonLeft').shootingPosition;
     } else {
-      this.startPoint = this.gameEngine.findElement('cannonRight').shootingPosition
+      this.startPoint = this.gameEngine.findElement('cannonRight').shootingPosition;
     }
   }
 
   setAngleAndSpeed(angle, speed) {
     this.angle = angle;
     this.speed = speed;
+    this.calcCoordMap();
   }
 
   calcSpeedXnY() {
@@ -34,12 +36,18 @@ class BallTrajectory {
   }
 
   updateSpeed() {
-    // this.speedX += this.gameEngine.wind / this.gameEngine.fps;
+    this.speedX += this.gameEngine.wind / this.gameEngine.fps;
     this.speedY += this.gameEngine.gravity / this.gameEngine.fps;
   }
 
   calcCoordMap() {
-    this.setColor('red')
+
+    let enabled = false
+    if (this.gameEngine.findElement('ball')) {
+      enabled = this.gameEngine.findElement('ball').enabled
+    }
+
+    this.setColor('red');
     this.defineStartPoint();
     this.calcSpeedXnY();
 
@@ -48,8 +56,8 @@ class BallTrajectory {
       y: this.startPoint.y
     }
     let i = 0;
-    let boolean = null
-    while (i < this.speed / 27) {
+    // while (i < this.speed / 27) {
+    while (i < this.speed) {
       coord.x = coord.x + (this.speedX / this.gameEngine.fps);
       coord.y = coord.y + (this.speedY / this.gameEngine.fps);
       this.coordMap.push({
@@ -63,6 +71,7 @@ class BallTrajectory {
 
   }
 
+
   clearTrajectory() {
     this.coordMap = [];
   }
@@ -74,7 +83,6 @@ class BallTrajectory {
   update() {}
 
   draw(brush) {
-
     function drawPoint(brush, x, y, radius) {
       brush.beginPath();
       brush.arc(x, y, radius, 0, 2 * Math.PI);

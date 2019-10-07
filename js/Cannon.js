@@ -44,7 +44,7 @@ class Cannon {
   update() {}
 
   shoot(speed, angle) {
-    let ball = new Ball(this.gameEngine, 'ball', this.shootingPosition.x, this.shootingPosition.y, this.resolution, this.enemyPosition);
+    let ball = new Ball(this.gameEngine, 'ball', this.shootingPosition.x, this.shootingPosition.y, this.resolution, this.enemyPosition, this.name);
     ball.apply(speed, angle);
     cannonGame.addElement(ball);
   }

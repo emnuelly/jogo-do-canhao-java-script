@@ -1,5 +1,6 @@
 class Ball {
-  constructor(gameEngine, name, startPosX, startPosY, resolution, enemyPosition) {
+  constructor(gameEngine, name, startPosX, startPosY, resolution, enemyPosition, ballOwner) {
+    this.ballOwner = ballOwner;
     this.gameEngine = gameEngine;
     this.name = name;
     this.positionX = startPosX;
@@ -24,17 +25,37 @@ class Ball {
       this.positionY += this.speedY / fps;
     }
 
-    // // colide conditions
-    // if (this.positionX >= this.enemyPosition.x && this.positionX <= this.enemyPosition.x + this.enemyPosition.size && (this.positionY >= this.enemyPosition.y && this.positionY <= this.enemyPosition.y + this.enemyPosition.size)) {
-    // confirm('Você ganhou!!!');
-    //   location.reload();
-    // }
+    if (this.positionY >= resolution.height) {
+      // this.resetAfterCollide()
+      if (this.ballOwner == 'cannonLeft') {
+        self = this;
+        this.enabled = false;
 
-    if (this.positionY >= resolution.height - 35) {
+        this.ballOwner = this.gameEngine.findElement('ball').ballOwner
+
+        this.gameEngine.gameElements.pop()
+        setTimeout(function () {
+          self.gameEngine.getAi().shoot();
+        }, 500)
+
+
+      }
       this.speedX = 0;
       this.speedY = 0;
       this.enabled = false;
     }
+  }
+
+  resetAfterCollide() {
+    if (this.ballOwner == 'cannonLeft') {
+      this.enabled = true
+      this.gameEngine.getAi().takeAim();
+    }
+    this.speedX = 0;
+    this.speedY = 0;
+    this.enabled = false;
+
+
   }
 
   draw(brush) {
@@ -45,20 +66,26 @@ class Ball {
   }
 
   onCollide(object) {
-    if (object.name == 'cannonRight' && (this.startingShootingPositionX < this.resolution.width / 2)) {
-      // alert('esquerda ganha')
+    if (object.name == 'cannonRight' && this.ballOwner == 'cannonLeft') {
       this.gameEngine.scorePlayer(true);
       this.gameEngine.gameElements.pop()
+      this.resetAfterCollide()
       console.log('jogador esquerda ganhou')
-    } else if (object.name == 'cannonLeft' && this.startingShootingPositionX > this.resolution.width / 2) {
-      // alert('direita ganha')
+    } else if (object.name == 'cannonLeft' && this.ballOwner == 'cannonRight') {
       this.gameEngine.scorePlayer(false);
+      this.resetAfterCollide();
       this.gameEngine.gameElements.pop()
+      this.enabled = false;
       console.log('jogador direita ganhou')
     } else if (object.name == 'floor') {
+      this.resetAfterCollide();
       console.log('chao')
     } else if (object.name == 'wall') {
-      this.speedX = -this.speedX;
+      if ((this.positionY + this.radius >= object.position.y) && (this.positionY + this.radius <= object.position.y + this.radius)) {
+        this.speedY = -this.speedY;
+      } else {
+        this.speedX = -this.speedX;
+      }
     }
   }
 

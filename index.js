@@ -14,8 +14,9 @@ let cannonGame = new Game(myEngine);
 let controls = new TouchControls(myEngine, screen, resolution);
 let myWall = new Wall('wall', {
   x: (resolution.width / 2) - 25,
-  y: 425
-}, 50, 175);
+  y: (resolution.height - 185)
+}, resolution.width / 23, resolution.height / 4);
+
 
 let myRooster = new Rooster(myEngine);
 let myCannon1 = new Cannon(
@@ -38,6 +39,9 @@ let myCannon2 = new Cannon(
   resolution
 );
 
+let myAi = new Ai(myEngine, myCannon2);
+myEngine.setAi(myAi)
+
 myEngine.addColideElement(myCannon1);
 myEngine.addColideElement(myCannon2);
 myEngine.addColideElement(myFloor);
@@ -49,7 +53,10 @@ cannonGame.addElement(myCannon1);
 cannonGame.addElement(myCannon2);
 cannonGame.addElement(myRooster);
 cannonGame.addElement(myWall);
+cannonGame.addElement(myAi);
 
 cannonGame.setControls(controls);
+cannonGame.setAi(myAi);
+
 
 cannonGame.start();

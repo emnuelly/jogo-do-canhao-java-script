@@ -3,10 +3,10 @@ class Floor {
     this.name = name;
     this.position = {
       x: 0,
-      y: resolution.height - 50
+      y: resolution.height - 30
     }
     this.width = resolution.width;
-    this.height = 50;
+    this.height = 30;
   }
 
   update() {}

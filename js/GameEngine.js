@@ -14,13 +14,23 @@ class GameEngine {
     this.scorePlayerOne = 0;
     this.scorePlayerTwo = 0;
 
-    this.changeWind()
+    this.ai = null;
+
+    this.changeWind();
   }
 
   getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return (Math.floor(Math.random() * (max - min + 1)) + min).toFixed(0);
+  }
+
+  setAi(ai) {
+    this.ai = ai;
+  }
+
+  getAi() {
+    return this.ai;
   }
 
   changeWind() {
@@ -70,8 +80,7 @@ class GameEngine {
             ((ball.positionX - ball.radius) < el.position.x + el.width) &&
             ((ball.positionY + ball.radius) > el.position.y) &&
             ((ball.positionY - ball.radius) < el.position.y + el.height)) {
-            ball.onCollide(el)
-
+            ball.onCollide(el);
           }
         })
       }
