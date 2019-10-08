@@ -46,8 +46,14 @@ class BallTrajectory {
     if (this.gameEngine.findElement('ball')) {
       enabled = this.gameEngine.findElement('ball').enabled
     }
+    if (enabled) {
+      this.setColor('transparent')
+    } else {
+      this.setColor('red')
+    }
 
-    this.setColor('red');
+
+    // this.setColor('red');
     this.defineStartPoint();
     this.calcSpeedXnY();
 
@@ -56,8 +62,8 @@ class BallTrajectory {
       y: this.startPoint.y
     }
     let i = 0;
-    // while (i < this.speed / 27) {
-    while (i < this.speed) {
+    while (i < this.speed / 27) {
+      // while (i < this.speed) {
 
       coord.x = coord.x + (this.speedX / this.gameEngine.fps);
       coord.y = coord.y + (this.speedY / this.gameEngine.fps);
@@ -92,11 +98,7 @@ class BallTrajectory {
 
     let radius = 2;
     brush.fillStyle = this.color;
-    let self = this;
     this.coordMap.forEach(function (el, i) {
-      if (i > parseInt(self.speed / 27)) {
-        return;
-      }
       drawPoint(brush, el.x, el.y, radius);
     })
     // this.clearTrajectory()

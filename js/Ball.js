@@ -34,9 +34,10 @@ class Ball {
         this.ballOwner = this.gameEngine.findElement('ball').ballOwner
 
         this.gameEngine.gameElements.pop()
-        setTimeout(function () {
-          self.gameEngine.getAi().shoot();
-        }, 500)
+        // setTimeout(function () {
+        //   self.gameEngine.getAi().shoot();
+        // }, 500)
+        this.gameEngine.getAi().takeAim();
 
 
       }
@@ -79,7 +80,6 @@ class Ball {
       console.log('jogador direita ganhou')
     } else if (object.name == 'floor') {
       this.resetAfterCollide();
-      console.log('chao')
     } else if (object.name == 'wall') {
       if ((this.positionY + this.radius >= object.position.y) && (this.positionY + this.radius <= object.position.y + this.radius)) {
         this.speedY = -this.speedY;
@@ -90,6 +90,7 @@ class Ball {
   }
 
   apply(speed, angle) {
+    console.log('ball:', angle, speed)
     this.enabled = true;
     this.speedX = Math.cos((angle * Math.PI) / 180) * speed;
     this.speedY = -Math.sin((angle * Math.PI) / 180) * speed;

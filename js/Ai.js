@@ -58,7 +58,7 @@ class Ai {
     // }
 
     start(game) {
-        this.arc = new BallTrajectory(this.gameEngine, 'arcAi', game, this.resolution);
+        this.arc = new BallTrajectoryAi(this.gameEngine, 'arcAi', game, this.resolution);
         this.recalculateAngleAndSpeed()
         game.getGameEngine().addElement(this.arc);
 
@@ -66,25 +66,40 @@ class Ai {
 
 
     waitShoot() {
+
         self = this;
         setTimeout(function () {
             self.shoot();
-        }, 500)
+            // self.arc.enabled = false;
+
+        }, 1000)
     }
 
 
     recalculateAngleAndSpeed() {
-        this.angle = this.getRandomInt(30, 70);
+        this.angle = this.getRandomInt(40, 100);
         this.speed = this.getRandomInt(500, 1000);
     }
 
     takeAim() {
-
+        // this.arc.enabled = true;
         // console.log(this.gameEngine.findElement('ball').enabled)
         this.recalculateAngleAndSpeed();
-        this.arc.setAngleAndSpeed(this.angle, this.speed)
+        let teste = this.arc.setAngleAndSpeed(this.angle, this.speed)
 
 
+        let i = 0
+        while (i < 500) {
+            this.recalculateAngleAndSpeed();
+            teste = this.arc.setAngleAndSpeed(this.angle, this.speed)
+
+            if (teste) {
+                break;
+            } else if ((!teste) && (i < 499)) {
+                this.arc.clearTrajectory()
+            }
+            i++;
+        }
 
         // let angulo = -45;
         // let speed = -500
