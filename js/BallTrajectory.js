@@ -58,6 +58,7 @@ class BallTrajectory {
     let i = 0;
     // while (i < this.speed / 27) {
     while (i < this.speed) {
+
       coord.x = coord.x + (this.speedX / this.gameEngine.fps);
       coord.y = coord.y + (this.speedY / this.gameEngine.fps);
       this.coordMap.push({
@@ -91,7 +92,11 @@ class BallTrajectory {
 
     let radius = 2;
     brush.fillStyle = this.color;
-    this.coordMap.forEach(function (el) {
+    let self = this;
+    this.coordMap.forEach(function (el, i) {
+      if (i > parseInt(self.speed / 27)) {
+        return;
+      }
       drawPoint(brush, el.x, el.y, radius);
     })
     // this.clearTrajectory()

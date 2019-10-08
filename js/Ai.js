@@ -11,6 +11,13 @@ class Ai {
         // this.arc = new BallTrajectory(this.gameEngine, 'arcAi', game, this.resolution);
     }
 
+    // IDEIAS PARA UM FUTURO MELHOR, OU TAMBEM CONHECIDO COMO BRAINSTORM:
+    // settar um angulo semi-aleatorio e varrer para achar o tiro certo
+
+
+
+
+
     // getImpactPointX(speed, angle) {
     //     let speedX = Math.cos((angle * Math.PI) / 180) * speed;
     //     let speedY = -Math.sin((angle * Math.PI) / 180) * speed;
