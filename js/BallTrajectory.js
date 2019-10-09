@@ -7,6 +7,7 @@ class BallTrajectory {
     this.resolution = resolution;
     this.coordMap = [];
 
+
     this.angle = null;
     this.speed = null;
 

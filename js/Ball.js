@@ -79,6 +79,7 @@ class Ball {
       this.enabled = false;
       console.log('jogador direita ganhou')
     } else if (object.name == 'floor') {
+      // console.log(this.positionY)
       this.resetAfterCollide();
     } else if (object.name == 'wall') {
       if ((this.positionY + this.radius >= object.position.y) && (this.positionY + this.radius <= object.position.y + this.radius)) {
@@ -90,7 +91,6 @@ class Ball {
   }
 
   apply(speed, angle) {
-    console.log('ball:', angle, speed)
     this.enabled = true;
     this.speedX = Math.cos((angle * Math.PI) / 180) * speed;
     this.speedY = -Math.sin((angle * Math.PI) / 180) * speed;

@@ -8,54 +8,11 @@ class Ai {
         this.perfectX
         this.speedX
         this.speedY
-        // this.arc = new BallTrajectory(this.gameEngine, 'arcAi', game, this.resolution);
+        this.resolution = {
+            x: this.gameEngine.screen.width,
+            y: this.gameEngine.screen.height
+        }
     }
-
-    // IDEIAS PARA UM FUTURO MELHOR, OU TAMBEM CONHECIDO COMO BRAINSTORM:
-    // settar um angulo semi-aleatorio e varrer para achar o tiro certo
-
-
-
-
-
-    // getImpactPointX(speed, angle) {
-    //     let speedX = Math.cos((angle * Math.PI) / 180) * speed;
-    //     let speedY = -Math.sin((angle * Math.PI) / 180) * speed;
-    //     let airTime = speedY / (this.gameEngine.gravity / this.gameEngine.fps);
-    //     let impactPointX = airTime * 2 * (speedX + this.gameEngine.wind / this.gameEngine.fps);
-
-    //     console.log(impactPointX)
-    //     return impactPointX;
-    // }
-
-    // scanForX(angle) {
-    //     let speed = 500;
-    //     let impactX = this.getImpactPointX(speed, angle);
-
-    //     while (impactX >= 19 || impactX <= 111) {
-    //         impactX = this.getImpactPointX(speed, angle);
-    //         speed++
-    //     }
-    //     return speed;
-    // }
-
-
-    // findPerfectShot(speed, x, y) {
-    //     if ((x >= 19) && (x <= 111) && (y >= 521) && (y <= 613)) {
-    //         return speed
-    //     }
-    //     if ((x < 0) || (y > 650)) {
-    //         return speed / 2
-    //     }
-    //     this.speedX = -Math.cos((this.angle * Math.PI) / 180) * speed + this.gameEngine.wind
-    //     this.speedY = -Math.sin((this.angle * Math.PI) / 180) * speed + this.gameEngine.gravity
-    //     console.log(speed)
-
-
-    //     this.findPerfectShot(speed, x + this.speedX, y + this.speedY)
-    //     return "nao achou"
-    //     // this.findPerfectShot(speed * 2, x + this.speedX, y + this.speedY)
-    // }
 
     start(game) {
         this.arc = new BallTrajectoryAi(this.gameEngine, 'arcAi', game, this.resolution);
@@ -70,9 +27,13 @@ class Ai {
         self = this;
         setTimeout(function () {
             self.shoot();
-            // self.arc.enabled = false;
 
         }, 1000)
+    }
+
+    setAngleAndSpeed(angle, speed) {
+        this.angle = angle;
+        this.speed = speed;
     }
 
 
@@ -82,35 +43,32 @@ class Ai {
     }
 
     takeAim() {
-        // this.arc.enabled = true;
-        // console.log(this.gameEngine.findElement('ball').enabled)
         this.recalculateAngleAndSpeed();
-        let teste = this.arc.setAngleAndSpeed(this.angle, this.speed)
+        let hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
 
 
         let i = 0
-        while (i < 500) {
+        while (i < 100) {
             this.recalculateAngleAndSpeed();
-            teste = this.arc.setAngleAndSpeed(this.angle, this.speed)
 
-            if (teste) {
+            if (hit.coord.x < 19) {
+                this.setAngleAndSpeed(this.angle, this.speed - (this.speed / 2))
+            } else if (hit.coord.x > 111) {
+                this.setAngleAndSpeed(this.angle, this.speed + (this.speed / 2))
+
+            }
+            hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
+
+            if (hit.hitCannon) {
                 break;
-            } else if ((!teste) && (i < 499)) {
+            } else if ((!hit.hitCannon) && (i < 99)) {
                 this.arc.clearTrajectory()
             }
             i++;
         }
 
-        // let angulo = -45;
-        // let speed = -500
-
-        // let speed = this.scanForX(angulo);
-        // console.log('AI shoot:', speed, angulo);
-        // this.arc.clearTrajectory();
-        // this.arc.setAngleAndSpeed(this.angle, this.speed)
         this.waitShoot();
 
-        // console.log(this.findPerfectShot(speed, 919, 532))
     }
 
     getRandomInt(min, max) {
@@ -121,34 +79,17 @@ class Ai {
 
     shoot() {
         this.arc.setAngleAndSpeed(this.angle, this.speed);
-        this.arc.setColor('red')
+        this.arc.setColor('blue')
         this.cannon.shoot(-this.speed, -this.angle);
         this.arc.clearTrajectory()
 
     }
 
     update() {
-        // this.arc.clearTrajectory()
-        // this.arc.setAngleAndSpeed(this.angle, this.speed);
-
 
 
     }
 
-    draw(brush) {
-
-        // function drawPoint(brush, x, y, radius) {
-        //     brush.beginPath();
-        //     brush.arc(x, y, radius, 0, 2 * Math.PI);
-        //     brush.fill();
-        // }
-
-        // let radius = 2;
-        // brush.fillStyle = 'red'
-        // this.arc.coordMap.forEach(function (el) {
-        //     drawPoint(brush, el.x, el.y, radius);
-        // })
-
-    }
+    draw(brush) {}
 
 }

@@ -16,7 +16,6 @@ class Game {
     ai.start(this);
   }
 
-
   addElement(gameElement) {
     this.gameEngine.addElement(gameElement);
   }
