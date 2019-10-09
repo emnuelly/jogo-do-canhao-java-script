@@ -14,8 +14,13 @@ let cannonGame = new Game(myEngine);
 let controls = new TouchControls(myEngine, screen, resolution);
 let myWall = new Wall('wall', {
   x: (resolution.width / 2) - 25,
-  y: (resolution.height - 185)
+  y: (resolution.height * 3 / 4)
 }, resolution.width / 23, resolution.height / 4);
+
+// aqui tem um gato... 
+let falseBall = new Ball(myEngine, 'ball', 0, 0, 0, 0, '');
+myEngine.addElement(falseBall);
+// gato termina aqui...
 
 
 let myRooster = new Rooster(myEngine);

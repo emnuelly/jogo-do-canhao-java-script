@@ -19,7 +19,6 @@ class Ai {
         this.arc = new BallTrajectoryAi(this.gameEngine, 'arcAi', game, this.resolution);
         this.recalculateAngleAndSpeed()
         game.getGameEngine().addElement(this.arc);
-
     }
 
     setAimAcordinToDificultyLevel(value) {
@@ -39,13 +38,11 @@ class Ai {
             case 4:
                 //impossibru
                 return value;
-
         }
     }
 
 
     waitShoot() {
-
         self = this;
         setTimeout(function () {
             self.shoot();
@@ -63,44 +60,34 @@ class Ai {
         this.speed = this.getRandomInt(500, 1000);
     }
     takeAim() {
+
         this.recalculateAngleAndSpeed();
         let hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
-        let y = hit.coord.y
 
 
         let i = 0
         while (i < 50) {
             this.arc.clearTrajectory()
-
+            console.log(hit.hitCannon)
             if (hit.coord.x < 19) {
                 hit = this.setAngleAndSpeed(this.angle, this.speed * 0.9)
-
             } else if (hit.coord.x > 80) {
                 hit = this.setAngleAndSpeed(this.angle, this.speed * 1.1)
-
             }
             hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
 
             if (hit.hitCannon) {
-                console.log('antes', this.angle)
-
                 this.angle = this.setAimAcordinToDificultyLevel(this.angle);
                 this.arc.clearTrajectory()
                 hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
-                console.log('descpois', this.angle)
                 return this.waitShoot();
-            } else if (i < 48) {} else if (i == 49) {
+            } else if (i == 49) {
                 i = 0;
                 this.recalculateAngleAndSpeed();
-
+                console.log('chegou no i 49')
             }
             i++;
         }
-
-
-
-
-
     }
 
     getRandomInt(min, max) {
@@ -114,17 +101,11 @@ class Ai {
     }
 
     shoot() {
-        // this.arc.setAngleAndSpeed(this.angle, this.speed);
-        // this.arc.setColor('blue')
         this.cannon.shoot(-this.speed, -this.angle);
         this.arc.clearTrajectory()
-
     }
 
-    update() {
-
-
-    }
+    update() {}
 
     draw(brush) {}
 

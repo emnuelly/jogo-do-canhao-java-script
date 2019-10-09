@@ -5,6 +5,13 @@ class BallTrajectoryAi extends BallTrajectory {
         // this.enabled = false;
         this.resolution = resolution
 
+        this.targetCannon = gameEngine.findElement('cannonLeft');
+
+
+    }
+
+    getBallOfTheTime() {
+        return this.gameEngine.findElement('ball');
     }
 
 
@@ -73,7 +80,14 @@ class BallTrajectoryAi extends BallTrajectory {
                     coord: coord
                 }
             }
-            if ((coord.x >= 19) && (coord.x <= 100) && (coord.y >= 521) && (coord.y <= 613)) {
+            let ball = this.getBallOfTheTime();
+            // if ((coord.x >= 19) && (coord.x <= 100) && (coord.y >= 521) && (coord.y <= 613)) {
+            if ((coord.x >= this.targetCannon.position.x - ball.radius) &&
+                (coord.x <= this.targetCannon.position.x + this.targetCannon.width + ball.radius) &&
+                (coord.y >= this.targetCannon.position.y - ball.radius) &&
+                (coord.y <= this.targetCannon.position.y + this.targetCannon.height + ball.radius)) {
+
+
                 return {
                     hitCannon: true,
                     coord: coord
