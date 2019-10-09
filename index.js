@@ -18,8 +18,7 @@ let myWall = new Wall('wall', {
 }, resolution.width / 23, resolution.height / 4);
 
 // aqui tem um gato... 
-let falseBall = new Ball(myEngine, 'ball', 0, 0, 0, 0, '');
-myEngine.addElement(falseBall);
+myEngine.addElement(new Ball(myEngine, 'ball', 0, 0, 0, 0, ''));
 // gato termina aqui...
 
 
