@@ -5,6 +5,14 @@ class GameEngine {
     this.gameElements = [];
     this.colideElements = [];
 
+    this.dificultyLevel = {
+      easy: 0,
+      medium: 1,
+      hard: 2,
+      insane: 3,
+      impossible: 4
+    }
+
     this.gravity = 800;
     this.wind = 0;
 

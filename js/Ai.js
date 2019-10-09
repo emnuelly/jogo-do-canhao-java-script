@@ -1,6 +1,7 @@
 class Ai {
     constructor(gameEngine, cannon) {
         this.gameEngine = gameEngine;
+        this.dificultyLevel = gameEngine.dificultyLevel.impossible;
         this.cannon = cannon;
         this.angle
         this.speed
@@ -21,13 +22,33 @@ class Ai {
 
     }
 
+    setAimAcordinToDificultyLevel(value) {
+        switch (this.dificultyLevel) {
+            case 0:
+                //easy
+                return value * this.getRandom(0.7, 1.3)
+            case 1:
+                //medium
+                return value * this.getRandom(0.8, 1.2)
+            case 2:
+                //hard
+                return value * this.getRandom(0.9, 1.1)
+            case 3:
+                //insane
+                return value * this.getRandom(0.98, 1.02);
+            case 4:
+                //impossibru
+                return value;
+
+        }
+    }
+
 
     waitShoot() {
 
         self = this;
         setTimeout(function () {
             self.shoot();
-
         }, 1000)
     }
 
@@ -60,14 +81,15 @@ class Ai {
             }
             hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
 
-            console.log(i, y)
             if (hit.hitCannon) {
-                console.log('achou', i, this.angle)
-                // break;
+                console.log('antes', this.angle)
+
+                this.angle = this.setAimAcordinToDificultyLevel(this.angle);
+                this.arc.clearTrajectory()
+                hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
+                console.log('descpois', this.angle)
                 return this.waitShoot();
             } else if (i < 48) {} else if (i == 49) {
-                console.log('nao acertou, angulo ' + this.angle)
-                console.log(hit.coord)
                 i = 0;
                 this.recalculateAngleAndSpeed();
 
@@ -87,9 +109,13 @@ class Ai {
         return (Math.floor(Math.random() * (max - min + 1)) + min).toFixed(0);
     }
 
+    getRandom(min, max) {
+        return (Math.random() * (max - min) + min);
+    }
+
     shoot() {
-        this.arc.setAngleAndSpeed(this.angle, this.speed);
-        this.arc.setColor('blue')
+        // this.arc.setAngleAndSpeed(this.angle, this.speed);
+        // this.arc.setColor('blue')
         this.cannon.shoot(-this.speed, -this.angle);
         this.arc.clearTrajectory()
 

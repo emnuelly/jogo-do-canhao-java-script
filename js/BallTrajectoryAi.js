@@ -65,11 +65,6 @@ class BallTrajectoryAi extends BallTrajectory {
                 y: coord.y
             });
 
-            if (i >= this.speed * 0.9) {
-                console.log(coord, this.startPoint)
-
-            }
-
             if (coord.y > this.startPoint.y + 45) {
                 // console.log(coord)
 
@@ -78,8 +73,7 @@ class BallTrajectoryAi extends BallTrajectory {
                     coord: coord
                 }
             }
-            if ((coord.x >= 19) && (coord.x <= 111) && (coord.y >= 521) && (coord.y <= 613)) {
-                console.log(coord)
+            if ((coord.x >= 19) && (coord.x <= 100) && (coord.y >= 521) && (coord.y <= 613)) {
                 return {
                     hitCannon: true,
                     coord: coord
