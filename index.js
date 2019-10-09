@@ -12,10 +12,19 @@ let myFloor = new Floor('floor', resolution);
 let myBackground = new Background(myEngine, 'background', resolution);
 let cannonGame = new Game(myEngine);
 let controls = new TouchControls(myEngine, screen, resolution);
-let myWall = new Wall('wall', {
-  x: (resolution.width / 2) - 25,
-  y: (resolution.height * 3 / 4)
-}, resolution.width / 23, resolution.height / 4);
+let myWall;
+if (resolution.width >= resolution.height) {
+  myWall = new Wall('wall', {
+    x: (resolution.width / 2) - 25,
+    y: (resolution.height * 8 / 12)
+  }, resolution.width / 23, resolution.height * 3 / 4);
+} else {
+  myWall = new Wall('wall', {
+    x: (resolution.width / 2) - 25,
+    y: (resolution.height * 10 / 12)
+  }, resolution.width / 23, resolution.height * 3 / 4);
+}
+
 
 // aqui tem um gato... 
 myEngine.addElement(new Ball(myEngine, 'ball', 0, 0, 0, 0, ''));
