@@ -25,11 +25,9 @@ if (resolution.width >= resolution.height) {
   }, resolution.width / 23, resolution.height * 3 / 4);
 }
 
-
 // aqui tem um gato... 
 myEngine.addElement(new Ball(myEngine, 'ball', 0, 0, 0, 0, ''));
 // gato termina aqui...
-
 
 let myRooster = new Rooster(myEngine);
 let myCannon1 = new Cannon(
@@ -70,6 +68,5 @@ cannonGame.addElement(myAi);
 
 cannonGame.setControls(controls);
 cannonGame.setAi(myAi);
-
 
 cannonGame.start();

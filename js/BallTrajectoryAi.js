@@ -1,26 +1,20 @@
 class BallTrajectoryAi extends BallTrajectory {
     constructor(gameEngine, name, game, resolution) {
-
         super(gameEngine, name, game, resolution);
         // this.enabled = false;
         this.resolution = resolution
-
         this.targetCannon = gameEngine.findElement('cannonLeft');
-
-
     }
 
     getBallOfTheTime() {
         return this.gameEngine.findElement('ball');
     }
 
-
     setAngleAndSpeed(angle, speed) {
         this.angle = angle;
         this.speed = speed;
         return this.calcMap();
     }
-
 
     calcCoordMap() {
         this.setColor('blue');
@@ -57,7 +51,6 @@ class BallTrajectoryAi extends BallTrajectory {
         this.defineStartPoint();
         this.calcSpeedXnY();
 
-
         let coord = {
             x: this.startPoint.x,
             y: this.startPoint.y
@@ -81,7 +74,6 @@ class BallTrajectoryAi extends BallTrajectory {
                 }
             }
             let ball = this.getBallOfTheTime();
-            // if ((coord.x >= 19) && (coord.x <= 100) && (coord.y >= 521) && (coord.y <= 613)) {
             if ((coord.x >= this.targetCannon.position.x - ball.radius) &&
                 (coord.x <= this.targetCannon.position.x + this.targetCannon.width + ball.radius) &&
                 (coord.y >= this.targetCannon.position.y - ball.radius) &&
@@ -96,7 +88,6 @@ class BallTrajectoryAi extends BallTrajectory {
             }
             this.updateSpeed();
             i++;
-
 
         }
         return {
@@ -117,8 +108,8 @@ class BallTrajectoryAi extends BallTrajectory {
         brush.fillStyle = this.color;
         let self = this;
         this.coordMap.forEach(function (el, i) {
-            // if (i > parseInt(self.speed / 27)) {
-            if (i > parseInt(self.speed)) {
+            if (i > parseInt(self.speed / 27)) {
+                // if (i > parseInt(self.speed)) {
                 return;
             }
             drawPoint(brush, el.x, el.y, radius);
