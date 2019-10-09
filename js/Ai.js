@@ -41,33 +41,43 @@ class Ai {
         this.angle = this.getRandomInt(40, 100);
         this.speed = this.getRandomInt(500, 1000);
     }
-
     takeAim() {
         this.recalculateAngleAndSpeed();
         let hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
+        let y = hit.coord.y
 
 
         let i = 0
-        while (i < 100) {
-            this.recalculateAngleAndSpeed();
+        while (i < 50) {
+            this.arc.clearTrajectory()
 
             if (hit.coord.x < 19) {
-                this.setAngleAndSpeed(this.angle, this.speed - (this.speed / 2))
-            } else if (hit.coord.x > 111) {
-                this.setAngleAndSpeed(this.angle, this.speed + (this.speed / 2))
+                hit = this.setAngleAndSpeed(this.angle, this.speed * 0.9)
+
+            } else if (hit.coord.x > 80) {
+                hit = this.setAngleAndSpeed(this.angle, this.speed * 1.1)
 
             }
             hit = this.arc.setAngleAndSpeed(this.angle, this.speed)
 
+            console.log(i, y)
             if (hit.hitCannon) {
-                break;
-            } else if ((!hit.hitCannon) && (i < 99)) {
-                this.arc.clearTrajectory()
+                console.log('achou', i, this.angle)
+                // break;
+                return this.waitShoot();
+            } else if (i < 48) {} else if (i == 49) {
+                console.log('nao acertou, angulo ' + this.angle)
+                console.log(hit.coord)
+                i = 0;
+                this.recalculateAngleAndSpeed();
+
             }
             i++;
         }
 
-        this.waitShoot();
+
+
+
 
     }
 

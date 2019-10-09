@@ -65,10 +65,13 @@ class BallTrajectoryAi extends BallTrajectory {
                 y: coord.y
             });
 
+            if (i >= this.speed * 0.9) {
+                console.log(coord, this.startPoint)
 
-            // console.log(super.resolution.height)
+            }
+
             if (coord.y > this.startPoint.y + 45) {
-                console.log('Y inicial ' + this.startPoint.y + 'Y Atual ' + coord.y)
+                // console.log(coord)
 
                 return {
                     hitCannon: false,
